@@ -6,19 +6,8 @@
 
 typedef u_int32_t uint32_t;
 
-
-
-/**
- * @brief execute main 
- * 
- */
-void execute(){
-	//ptc_open("wi",640,360);
-
-}
-
-	const uint32_t KSCRWEIGHT {640};
-    const uint32_t KSCRHEIGHT {360} ;
+const uint32_t KSCRWEIGHT {640};
+const uint32_t KSCRHEIGHT {360} ;
 
 int main(){
 	
