@@ -21,20 +21,25 @@ namespace ECS {
 
         //Devuelve el vector de entidades que dibujaremos una a una
         auto& entities = m_Entity.getEntities();
-
-        for(auto& e:entities)
-        {
+        uint32_t* screen = m_framebuffer.get();
+        
+        
+            auto getPosicionScreenXY = [&](uint32_t x, uint32_t y){return screen + y*m_w +x;};
+            //funcion lambda para simplificar los calculos. usamos & para referencia o = para copia. 
+            auto drawEntity = [&](const Entity_t& e ){
             //Es decir cada vez que queramos dibuajr todas las entidades, neceitamos obtener el puntero
             //de la pantalla , para poder ubicarnos , el puntero de la pantalla siempre va a tener un origen,begin(), 
             //m_framebuffer
-            uint32_t* screen = m_framebuffer.get(); //puntero a la pantalla 
-            screen += e.y*m_w +e.x; //necesito saltar y veces para colocarme en su sitio, y despues solamente recorrer la X. 
-            //ya estoy colocado en la pantalla, ahora necesito recorrecor mi sprite 
-            //Recorro el alto, y voy rellando el ancho , copiando my entiti al screen. 
-            auto sprite_it = begin(e.sprite);
-        //  auto sprite_it = e.sprite.data() otra forma igual al hacer. 
-            for(size_t i = 0; i<(e.h); ++i)
-            {
+                screen = m_framebuffer.get();
+                screen = getPosicionScreenXY(e.x,e.y);
+                 //puntero a la pantalla 
+                screen += e.y*m_w +e.x; //necesito saltar y veces para colocarme en su sitio, y despues solamente recorrer la X. 
+                //ya estoy colocado en la pantalla, ahora necesito recorrecor mi sprite 
+                //Recorro el alto, y voy rellando el ancho , copiando my entiti al screen. 
+                auto sprite_it = begin(e.sprite);
+                //  auto sprite_it = e.sprite.data() otra forma igual al hacer. 
+                for(size_t i = 0; i<(e.h); ++i)
+                {
                 //cuando tenemos un vector y queremos copiar, usamos esta tecnica. 
                 std::copy(sprite_it, (sprite_it + e.w), screen);
                 //actualizo sprite_it a la siguiente linea 
@@ -42,9 +47,12 @@ namespace ECS {
                 //Salto la pantalla 
                 screen += m_w;
 
-            }
+                }
 
-        }//for(auto& e:entities)
+            };
+            std::for_each(begin(entities),end(entities),drawEntity);
+
+        //for(auto& e:entities)
 
 
 
