@@ -17,9 +17,9 @@ int main(){
 	EntityMan.createEntity(40,49,16,16,0x00FF0000);
 	EntityMan.createEntity(0,0,34,34,0x000000FF);
 	
-	const ECS::RenderSystem_t Render(KSCRWEIGHT,KSCRHEIGHT,EntityMan);
+	const ECS::RenderSystem_t Render(KSCRWEIGHT,KSCRHEIGHT);
 
-		while(Render.update());
+		while(Render.update(EntityMan));
 	}
 	catch(...){
 		std::cout << "not execute error \n";

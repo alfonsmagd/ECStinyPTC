@@ -2,21 +2,24 @@
 
 #include "cstdint"
 #include <memory>
+#include <util/typealias.hpp>
+#include <util/gamecontext.hpp>
 
 
 namespace ECS
 {
     struct EntityManager_t;
+    struct  GameContext_t ;
     
     struct RenderSystem_t {
 
-        explicit RenderSystem_t(uint32_t w, uint32_t h,EntityManager_t& em );
+        explicit RenderSystem_t(uint32_t w, uint32_t h );
         
         ~RenderSystem_t();
         
-        bool update() const;
+        bool update(const GameContext_t& g) const ;
         void drawSprite();
-        void drawAllEntities() const;
+        void drawAllEntities(const VecEntities_t& entities) const;
 
         //Constantes 
 
@@ -35,7 +38,7 @@ namespace ECS
 
         const uint32_t m_w {0}, m_h{0};
         std::unique_ptr<uint32_t[]> m_framebuffer{nullptr};
-        EntityManager_t& m_Entity;
+        
 
 
     };

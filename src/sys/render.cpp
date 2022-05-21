@@ -2,14 +2,15 @@
 #include <tinyPTC/src/tinyptc.h>
 #include <sys/render.hpp>
 #include <man/entitymanager.hpp>
+#include <util/gamecontext.hpp>
 #include <iostream>
 #include <algorithm>
 
 namespace ECS {
 
-    RenderSystem_t::RenderSystem_t(uint32_t w, uint32_t h,EntityManager_t& em ) : m_w(w), m_h(h),
-        m_framebuffer{std::make_unique<uint32_t[]>(m_w*m_h)},
-        m_Entity{em}
+    RenderSystem_t::RenderSystem_t(uint32_t w, uint32_t h ) : m_w(w), m_h(h),
+        m_framebuffer{std::make_unique<uint32_t[]>(m_w*m_h)}
+        
     {
     
        ptc_open("window",m_w,m_h);
@@ -17,10 +18,10 @@ namespace ECS {
 
     }
 
-    void RenderSystem_t::drawAllEntities() const {
+    void RenderSystem_t::drawAllEntities(const VecEntities_t& entities) const {
 
         //Devuelve el vector de entidades que dibujaremos una a una
-        auto& entities = m_Entity.getEntities();
+        
         uint32_t* screen = m_framebuffer.get();
         
         
@@ -80,16 +81,17 @@ namespace ECS {
     }
 */    
 
-    bool RenderSystem_t::update() const 
+    bool RenderSystem_t::update(const GameContext_t& g) const 
     {
 
         auto screen = m_framebuffer.get();
+        
         auto size = m_w*m_h;
         std::cout << size << "el valor medio es :"<<(size/2)<<"   " << (size/3) << "\n";
         std::fill(screen, screen+(size/2),Kg);
         std::fill(screen+(size/2)+1,screen + size, Kr); //Rellena el ptr desde inicio (screen hsata el final. )
 
-		drawAllEntities(); 
+		drawAllEntities(g.getEntities()); 
 		ptc_update(screen);
 
         return !ptc_process_events();
