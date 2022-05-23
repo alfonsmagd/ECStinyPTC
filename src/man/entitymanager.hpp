@@ -27,7 +27,8 @@ namespace ECS
         
         //El final se utiliza para que el hijo que herede de aqui no tenga que herdedar getEntities. 
         const VecEntities_t& getEntities()  const override final { return m_Entity;}
-        
+        //int num() const override {return 3;}
+      
         private:
         
         VecEntities_t m_Entity;

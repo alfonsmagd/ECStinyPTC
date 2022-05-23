@@ -14,8 +14,8 @@ int main(){
   try{
 
 	ECS::EntityManager_t EntityMan;
-	EntityMan.createEntity(40,49,16,16,0x00FF0000);
-	EntityMan.createEntity(0,0,34,34,0x000000FF);
+	EntityMan.createEntity(40,49,0,0,0x00FF0000);
+	//EntityMan.createEntity(0,0,34,34,0x000000FF);
 	
 	const ECS::RenderSystem_t Render(KSCRWEIGHT,KSCRHEIGHT);
 
