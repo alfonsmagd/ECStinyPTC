@@ -32,6 +32,20 @@
             decodePNG(pixels,dw,dh,filevec.data(),filevec.size());
             reorderpixels.resize(pixels.size());
             
+            // Otra forma de hacer
+            
+            for(auto p = pixels.begin() ; p != pixels.end() ; p +=4)
+            {
+               uint32_t pixelaux = 
+               static_cast<uint32_t>(*(p+0))<<16 |
+               static_cast<uint32_t>(*(p+1))<<8  |
+               static_cast<uint32_t>(*(p+2))     |
+               static_cast<uint32_t>(*(p+3))<<24
+            
+             sprite.push_back(pixelaux);
+            }
+            
+            
             for(size_t i = 0; i < pixels.size(); i+=4)
             {
                 reorderpixels[i] = pixels[i+2];
