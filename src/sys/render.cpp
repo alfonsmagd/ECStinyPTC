@@ -22,7 +22,7 @@ namespace ECS {
 
         //Devuelve el vector de entidades que dibujaremos una a una
         
-        uint32_t* screen = m_framebuffer.get();
+        auto screen = m_framebuffer.get();
         
         
             auto getPosicionScreenXY = [&](uint32_t x, uint32_t y){return screen + y*m_w +x;};
@@ -31,10 +31,10 @@ namespace ECS {
             //Es decir cada vez que queramos dibuajr todas las entidades, neceitamos obtener el puntero
             //de la pantalla , para poder ubicarnos , el puntero de la pantalla siempre va a tener un origen,begin(), 
             //m_framebuffer
-                screen = m_framebuffer.get();
+                //screen = m_framebuffer.get();
                 screen = getPosicionScreenXY(e.x,e.y);
                  //puntero a la pantalla 
-                screen += e.y*m_w +e.x; //necesito saltar y veces para colocarme en su sitio, y despues solamente recorrer la X. 
+                //screen += e.y*m_w +e.x; //necesito saltar y veces para colocarme en su sitio, y despues solamente recorrer la X. 
                 //ya estoy colocado en la pantalla, ahora necesito recorrecor mi sprite 
                 //Recorro el alto, y voy rellando el ancho , copiando my entiti al screen. 
                 auto sprite_it = begin(e.sprite);
@@ -87,9 +87,9 @@ namespace ECS {
         auto screen = m_framebuffer.get();
         
         auto size = m_w*m_h;
-        std::cout << size << "el valor medio es :"<<(size/2)<<"   " << (size/3) << "\n";
-        std::fill(screen, screen+(size/2),Kg);
-        std::fill(screen+(size/2)+1,screen + size, Kr); //Rellena el ptr desde inicio (screen hsata el final. )
+        //std::cout << size << "el valor medio es :"<<(size/2)<<"   " << (size/3) << "\n";
+        std::fill(screen, screen+size,Kg);
+        //std::fill(screen+(size/2)+1,screen + size, Kr); //Rellena el ptr desde inicio (screen hsata el final. )
 
 		drawAllEntities(g.getEntities()); 
 		ptc_update(screen);
