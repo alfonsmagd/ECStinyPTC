@@ -1,0 +1,49 @@
+## me crea obj si no se ha creado anteriormente 
+
+APP     := game
+CCFLAGS := -Wall -pedantic            ##Comment flags. 
+CFLAGS  := $(CCFLAGS)
+CC      := g++                        ##Compilers. c++
+C       := gcc						  ##Compilador de C 
+MKDIR   := mkdir -p                   ## Me permite crear carpetas padres. y la creo solo cuando no exista. 
+
+SRC     := src
+OBJ     := obj
+LIB     := -lX11
+
+
+ALLCS       :=		$(shell find $(SRC)/ -type f -iname *.c)
+ALLCPPS     :=      $(shell find $(SRC)/ -type f -iname *.cpp)
+ALLCSOBJ    :=      $(patsubst %.c,%.o,$(ALLCS))
+ALLCPPSOBJ  :=      $(patsubst %.cpp,%.o,$(ALLCPPS))
+SUBDIRS 	:= 		$(shell find $(SRC)/ -type d )        ## Me llevo los subidrectorios y genero scripting con shell 
+OBJSUBDIRS  :=		$(patsubst $(SRC)%,$(OBJ)%,$(SUBDIRS))         ##En subdirs, lo que veas en SRC , lo vas a cambiar por OBJ .. 
+.PHONY: dir                                   ## Se utiliza para no generar una salida simplemente ya que siempre se lanzaria 
+
+##el -c me dice que tiene que compilar ambos main.o y main cpp , pero no te crea main.o, para crear el .o se pone -o
+
+
+$(APP) : $(OBJSUBDIRS) $(ALLCSOBJ) $(ALLCPPSOBJ)	
+	# EN ALLCPPSOBJ Y ALLCSOBJ LO QUE VEAS CON SRC , LO CAMBIAS POR OBJ 
+	$(CC) -o $(APP) $(patsubst $(SRC)%,$(OBJ)%,$(ALLCPPSOBJ) $(ALLCSOBJ)) $(LIB)
+	$()	  ##depende Game depende main.cpp y cada vez que cambien lo construyo.1.Genero Directorio 2. Genero los .o 3.y se bus
+	#$(CC) $(SRC)/main.cpp -c -o obj/main.o $(CCFLAGS) 
+	##comando para construir.  y generamos en obj que ya ha sido creado 
+
+#para todo .o hay una dependencia .c 
+$(OBJ)/%.o : $(SRC)/%.c               
+	$(C) -o $(patsubst $(SRC)%,$(OBJ)%,$@) -c $^ $(CFLAGS)
+
+$(OBJ)/%.o : $(SRC)/%.cpp               
+	$(CC) -o $(patsubst $(SRC)%,$(OBJ)%,$@) -c $^ $(CCFLAGS)
+
+dir:
+	$(info $(SUBDIRS))
+	$(info $(OBJSUBDIRS))
+	$(info $(ALLCPPS))
+	$(info $(ALLCS))
+	$(info $(ALLCSOBJ))
+
+
+$(OBJSUBDIRS) : 
+	$(MKDIR) $(OBJSUBDIRS)
