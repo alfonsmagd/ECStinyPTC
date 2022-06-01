@@ -3,6 +3,8 @@
 #include <memory>
 #include <sys/render.hpp>
 #include <man/entitymanager.hpp>
+#include <sys/physics.hpp>
+#include <sys/collision.hpp>
 
 typedef u_int32_t uint32_t;
 
@@ -13,13 +15,19 @@ int main(){
 	
   try{
 
+	ECS::PhysicsSystem_t PhySys;
 	ECS::EntityManager_t EntityMan;
-	EntityMan.createEntity(40,49,0,0,0x00FF0000);
+	ECS::CollisionSystem_t ColliSys;
+	EntityMan.createEntity(0,0,3,3,0x00FF0000);
 	//EntityMan.createEntity(0,0,34,34,0x000000FF);
+	
 	
 	const ECS::RenderSystem_t Render(KSCRWEIGHT,KSCRHEIGHT);
 
-		while(Render.update(EntityMan));
+		while(Render.update(EntityMan)){
+			PhySys.update(EntityMan);
+			ColliSys.update(EntityMan);
+		}
 	}
 	catch(...){
 		std::cout << "not execute error \n";
