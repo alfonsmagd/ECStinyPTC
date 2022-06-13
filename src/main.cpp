@@ -18,7 +18,7 @@ int main(){
 	ECS::PhysicsSystem_t PhySys;
 	ECS::EntityManager_t EntityMan;
 	ECS::CollisionSystem_t ColliSys;
-	EntityMan.createEntity(0,0,3,3,0x00FF0000);
+	EntityMan.createEntity(0,0,"assets/pica1.png");
 	//EntityMan.createEntity(0,0,34,34,0x000000FF);
 	
 	

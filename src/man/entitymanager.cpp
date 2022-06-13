@@ -10,11 +10,18 @@ namespace ECS {
     }
     
     //CreateEntity
-    void EntityManager_t::createEntity(uint32_t x, uint32_t y, 
-                                        uint32_t w, uint32_t h, uint32_t color)
+    void 
+    EntityManager_t::createEntity(uint32_t x, uint32_t y, 
+                                        std::string filename)
     {
-        auto& e = m_Entity.emplace_back("assets/d.png");
-        e.x = x; e.y = y; //Update position. 
+        auto& e = m_Entity.emplace_back(filename);
+        auto& ph = m_components.createPhysicsComponent();
+        
+        e.phy = &ph;
+        ph.x = x; 
+        ph.y = y;
+
+        //Update position. 
         //std::fill(begin(e.sprite),end(e.sprite),color);
         
         //fORMA NO EFICIENTE 

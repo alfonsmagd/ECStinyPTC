@@ -11,12 +11,21 @@ namespace ECS
 
         for(auto& e: g.getEntities()){
 
-          if(e.x > 640 || (e.x + e.w) > 640){e.x -= e.vx ; e.vx = -e.vx;}
-          //std::cout<<"el valor de e.x es = >"<<e.x+e.w;
+        if(e.phy != nullptr){
+          //Avoid screen x collision.
+          if(e.phy->x > 640 || (e.phy->x + e.w) > 640)
+          {
+            e.phy->x -= e.phy->vx ; e.phy->vx = -e.phy->vx;
+          }
+          //Avoid screen y collision.
+          if(e.phy->y >360||  (e.phy->y + e.h) >360)
+          {
+            e.phy->y -= e.phy->vy ; e.phy->vy = -e.phy->vy;
+          }
+
+        }//if(e.phy != nullptr)
           
-          if(e.y >360||  (e.y + e.h) >360) {e.y -= e.vy ; e.vy = -e.vy;}
-          //std::cout<<"el valor de e.y es => "<<e.y + e.h<< "\n";
-        }
+      }//for(auto& e: g.getEntities())
 
         return true;
         

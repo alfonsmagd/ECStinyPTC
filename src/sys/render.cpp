@@ -32,22 +32,24 @@ namespace ECS {
             //de la pantalla , para poder ubicarnos , el puntero de la pantalla siempre va a tener un origen,begin(), 
             //m_framebuffer
                 //screen = m_framebuffer.get();
-                screen = getPosicionScreenXY(e.x,e.y);
-                 //puntero a la pantalla 
-                //screen += e.y*m_w +e.x; //necesito saltar y veces para colocarme en su sitio, y despues solamente recorrer la X. 
-                //ya estoy colocado en la pantalla, ahora necesito recorrecor mi sprite 
-                //Recorro el alto, y voy rellando el ancho , copiando my entiti al screen. 
-                auto sprite_it = begin(e.sprite);
-                //  auto sprite_it = e.sprite.data() otra forma igual al hacer. 
-                for(size_t i = 0; i<(e.h); ++i)
-                {
-                //cuando tenemos un vector y queremos copiar, usamos esta tecnica. 
-                std::copy(sprite_it, (sprite_it + e.w), screen);
-                //actualizo sprite_it a la siguiente linea 
-                sprite_it += e.w; 
-                //Salto la pantalla 
-                screen += m_w;
+                if(e.phy != nullptr){
+                    screen = getPosicionScreenXY(e.phy->x,e.phy->y);
+                    //puntero a la pantalla 
+                    //screen += e.y*m_w +e.x; //necesito saltar y veces para colocarme en su sitio, y despues solamente recorrer la X. 
+                    //ya estoy colocado en la pantalla, ahora necesito recorrecor mi sprite 
+                    //Recorro el alto, y voy rellando el ancho , copiando my entiti al screen. 
+                    auto sprite_it = begin(e.sprite);
+                    //  auto sprite_it = e.sprite.data() otra forma igual al hacer. 
+                    for(size_t i = 0; i<(e.h); ++i)
+                    {
+                    //cuando tenemos un vector y queremos copiar, usamos esta tecnica. 
+                    std::copy(sprite_it, (sprite_it + e.w), screen);
+                    //actualizo sprite_it a la siguiente linea 
+                    sprite_it += e.w; 
+                    //Salto la pantalla 
+                    screen += m_w;
 
+                    }
                 }
 
             };

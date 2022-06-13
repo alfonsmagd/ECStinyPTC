@@ -9,8 +9,11 @@ namespace ECS {
     struct GameContext_t {
         
         virtual ~GameContext_t() = default;
-        virtual const VecEntities_t& getEntities() const = 0;
-
+        virtual const VecEntities_t& getEntities() const = 0; //solo lectura
+        virtual       VecEntities_t& getEntities()       = 0;
+        
+        virtual const VecPhysComponents_t& getPhysicsComponents() const = 0; //only read
+        virtual       VecPhysComponents_t& getPhysicsComponents()       = 0; 
 
     };
 

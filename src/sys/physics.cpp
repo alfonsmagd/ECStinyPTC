@@ -10,10 +10,10 @@ namespace ECS
     bool 
     PhysicsSystem_t::update(GameContext_t& g) const {
 
-        for(auto& e: g.getEntities()){
+        for(auto& phy: g.getPhysicsComponents()){
 
-          e.x += e.vx;
-          e.y += e.vy;
+          phy.x += phy.vx;
+          phy.y += phy.vy;
 
         }
 

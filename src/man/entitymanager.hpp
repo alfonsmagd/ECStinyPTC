@@ -3,6 +3,7 @@
 #include "cstdint"
 #include <memory>
 #include <vector> 
+#include <man/componentstorage.hpp>
 #include <util/typealias.hpp>
 #include <util/gamecontext.hpp>
 
@@ -16,7 +17,7 @@ namespace ECS
        
         //Definimos el tam total de numeros de entidades que vamos a reservar.
         static constexpr std::size_t kNUMINITIALENTITIES {1000};
-        void createEntity(uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint32_t color);
+        void createEntity(uint32_t x, uint32_t y, std::string filename);
         
         explicit EntityManager_t();
         
@@ -26,11 +27,17 @@ namespace ECS
         //este metodo no cambia los valores y por eso tiene const. 
         
         //El final se utiliza para que el hijo que herede de aqui no tenga que herdedar getEntities. 
-        const VecEntities_t& getEntities()  const override final { return m_Entity;}
+        const VecEntities_t& getEntities()  const override  { return m_Entity;}
         //int num() const override {return 3;}
-      
-        private:
+         VecEntities_t& getEntities()   override { return m_Entity;}
         
+        const VecPhysComponents_t& getPhysicsComponents() const override {return m_components.getPhysicsComponents();}
+              VecPhysComponents_t& getPhysicsComponents()       override {return m_components.getPhysicsComponents();}
+         
+        private:
+
+        //ComponentStorage se encarga de almacenar los componentes para mejorar la gestion
+        ComponentStorage_t m_components {kNUMINITIALENTITIES};
         VecEntities_t m_Entity;
     };
 
