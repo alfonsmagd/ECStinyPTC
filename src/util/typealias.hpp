@@ -1,12 +1,16 @@
 #pragma once 
 
 #include <vector>
-#include <cmp/entity.hpp>
+//#include <cmp/entity.hpp> avoid circular declaration 
 #include <cmp/physics.hpp>
 
 namespace ECS {
 
-    using VecEntities_t = std::vector<Entity_t>;
-    using VecPhysComponents_t = std::vector<PhysicsComponent_t>;
+    
+    template<typename T>
+    using Vec_t = std::vector<T>;
 
+   
+    using VecPhysComponents_t   = std::vector<PhysicsComponent_t>;
+    using EntityID_t            = std::size_t;
 }

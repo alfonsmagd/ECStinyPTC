@@ -7,11 +7,14 @@
 #include <fstream>
 #include <cstring>
 #include <cmp/physics.hpp>
+#include <util/typealias.hpp>
  //Entity desing 
  namespace ECS {
+
+    
     struct Entity_t
     {
-        explicit Entity_t(uint32_t _w, uint32_t _h) : w{_w},h{_h}
+        explicit Entity_t(uint32_t pw, uint32_t ph) : w{pw},h{ph}
         {
             sprite.resize(w*h);
             
@@ -47,28 +50,16 @@
                 
             }
         
-/*
-            for(size_t i = 0; i < pixels.size(); i+=4)
-            {
-                reorderpixels[i] = pixels[i+2];
-                reorderpixels[i+1] = pixels[i+1];
-                reorderpixels[i+2] = pixels[i];
-                reorderpixels[i+3] = pixels[i+3];
-            }
-           */
-            //Divido entre 4 por que paso de UINT32--> CHAR  
-            //std::memcpy(sprite.data(),pixels.data(),pixels.size());
-
-           
-
             w =dw, h = dh;
 
         }
         PhysicsComponent_t* phy {nullptr};
         uint32_t w{0}, h{0};
-        
-        
+        EntityID_t entityID {++nextID};
         std::vector<uint32_t> sprite{} ;
+        
+        private:
+        inline static EntityID_t nextID {0};
 
 
     };

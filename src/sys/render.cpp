@@ -18,7 +18,7 @@ namespace ECS {
 
     }
 
-    void RenderSystem_t::drawAllEntities(const VecEntities_t& entities) const {
+    void RenderSystem_t::drawAllEntities(const Vec_t<Entity_t>& entities) const {
 
         //Devuelve el vector de entidades que dibujaremos una a una
         

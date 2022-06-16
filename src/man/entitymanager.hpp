@@ -7,9 +7,10 @@
 #include <util/typealias.hpp>
 #include <util/gamecontext.hpp>
 
+
 namespace ECS
 {
-   
+  
     
     //EntityManager 
     struct EntityManager_t : public GameContext_t
@@ -27,9 +28,9 @@ namespace ECS
         //este metodo no cambia los valores y por eso tiene const. 
         
         //El final se utiliza para que el hijo que herede de aqui no tenga que herdedar getEntities. 
-        const VecEntities_t& getEntities()  const override  { return m_Entity;}
+        const Vec_t<Entity_t>& getEntities()  const override  { return m_Entity;}
         //int num() const override {return 3;}
-         VecEntities_t& getEntities()   override { return m_Entity;}
+         Vec_t<Entity_t>& getEntities()   override { return m_Entity;}
         
         const VecPhysComponents_t& getPhysicsComponents() const override {return m_components.getPhysicsComponents();}
               VecPhysComponents_t& getPhysicsComponents()       override {return m_components.getPhysicsComponents();}
@@ -38,7 +39,8 @@ namespace ECS
 
         //ComponentStorage se encarga de almacenar los componentes para mejorar la gestion
         ComponentStorage_t m_components {kNUMINITIALENTITIES};
-        VecEntities_t m_Entity;
+        Vec_t<Entity_t> m_Entity;
+        
     };
 
 

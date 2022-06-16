@@ -3,7 +3,7 @@
 #include "cstdint"
 #include <memory>
 #include <util/typealias.hpp>
-#include <util/gamecontext.hpp>
+#include <cmp/entity.hpp>
 
 
 namespace ECS
@@ -19,7 +19,7 @@ namespace ECS
         
         bool update(const GameContext_t& g) const ;
         void drawSprite();
-        void drawAllEntities(const VecEntities_t& entities) const;
+        void drawAllEntities(const Vec_t<Entity_t>& entities) const;
 
         //Constantes 
 
