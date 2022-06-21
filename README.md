@@ -11,3 +11,4 @@ C++ 17. You can change the c++ version change the makefile flags.
 
 
 
+Not complete, the next stage its create ID for each component to identificate in the code. 
