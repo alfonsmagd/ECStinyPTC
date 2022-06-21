@@ -19,6 +19,8 @@ int main(){
 	ECS::EntityManager_t EntityMan;
 	ECS::CollisionSystem_t ColliSys;
 	EntityMan.createEntity(0,0,"assets/pica1.png");
+	EntityMan.createEntity(222,0,"assets/run-1.png");
+	EntityMan.createEntity(11,0,"assets/run-2.png");
 	//EntityMan.createEntity(0,0,34,34,0x000000FF);
 	
 	

@@ -11,8 +11,8 @@ namespace ECS {
         virtual const Vec_t<Entity_t>& getEntities() const = 0; //solo lectura
         virtual       Vec_t<Entity_t>&& getEntities()       = 0;
         
-        virtual const VecPhysComponents_t& getPhysicsComponents() const = 0; //only read
-        virtual       VecPhysComponents_t& getPhysicsComponents()       = 0; 
+        virtual const Vec_t<PhysicsComponent_t>& getPhysicsComponents() const = 0; //only read
+        virtual       Vec_t<PhysicsComponent_t>& getPhysicsComponents()       = 0; 
 
     };
 

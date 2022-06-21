@@ -32,8 +32,8 @@ namespace ECS
         //int num() const override {return 3;}
          Vec_t<Entity_t>& getEntities()   override { return m_Entity;}
         
-        const VecPhysComponents_t& getPhysicsComponents() const override {return m_components.getPhysicsComponents();}
-              VecPhysComponents_t& getPhysicsComponents()       override {return m_components.getPhysicsComponents();}
+        const Vec_t<PhysicsComponent_t>& getPhysicsComponents() const override {return m_components.getPhysicsComponents();}
+              Vec_t<PhysicsComponent_t>& getPhysicsComponents()       override {return m_components.getPhysicsComponents();}
          
         private:
 

@@ -31,7 +31,7 @@ namespace ECS {
             //Es decir cada vez que queramos dibuajr todas las entidades, neceitamos obtener el puntero
             //de la pantalla , para poder ubicarnos , el puntero de la pantalla siempre va a tener un origen,begin(), 
             //m_framebuffer
-                //screen = m_framebuffer.get();
+                screen = m_framebuffer.get();
                 if(e.phy != nullptr){
                     screen = getPosicionScreenXY(e.phy->x,e.phy->y);
                     //puntero a la pantalla 

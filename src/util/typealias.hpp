@@ -2,7 +2,7 @@
 
 #include <vector>
 //#include <cmp/entity.hpp> avoid circular declaration 
-#include <cmp/physics.hpp>
+//#include <cmp/physics.hpp>
 
 namespace ECS {
 
@@ -11,6 +11,7 @@ namespace ECS {
     using Vec_t = std::vector<T>;
 
    
-    using VecPhysComponents_t   = std::vector<PhysicsComponent_t>;
+    //using VecPhysComponents_t   = std::vector<PhysicsComponent_t>;
+    using ComponentID_t         = std::size_t;
     using EntityID_t            = std::size_t;
 }

@@ -21,15 +21,15 @@ namespace ECS
 
         PhysicsComponent_t& createPhysicsComponent();
         //Not use overrdie because not herence in the functions. 
-        const VecPhysComponents_t& getPhysicsComponents() const  {return m_physicsComponents;}
-              VecPhysComponents_t& getPhysicsComponents()        {
+        const Vec_t<PhysicsComponent_t>& getPhysicsComponents() const  {return m_physicsComponents;}
+              Vec_t<PhysicsComponent_t>& getPhysicsComponents()        {
                  
-                 return const_cast<VecPhysComponents_t&>(const_cast<const ComponentStorage_t*>(this)->getPhysicsComponents());
+                 return const_cast<Vec_t<PhysicsComponent_t>&>(const_cast<const ComponentStorage_t*>(this)->getPhysicsComponents());
                   
                   }
     private:
 
-        VecPhysComponents_t m_physicsComponents {};
+        Vec_t<PhysicsComponent_t> m_physicsComponents {};
 
 
 
