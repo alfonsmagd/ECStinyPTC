@@ -12,12 +12,16 @@ namespace ECS {
     //CreateEntity
     void 
     EntityManager_t::createEntity(uint32_t x, uint32_t y, 
-                                        std::string filename)
+                                  const std::string_view filename)
     {
-        auto& e = m_Entity.emplace_back(filename);
-        auto& ph = m_components.createPhysicsComponent();
+        auto& e = m_Entity.emplace_back();
+        auto& ph = m_components.createPhysicsComponent(e.entityID);
+        auto& rn = m_components.createRenderComponent(e.entityID);
         
+        rn.loadFromFile(filename);
+
         e.phy = &ph;
+        e.rend  = &rn;
         ph.x = x; 
         ph.y = y;
 

@@ -13,12 +13,12 @@ namespace ECS
 
         if(e.phy != nullptr){
           //Avoid screen x collision.
-          if(e.phy->x > 640 || (e.phy->x + e.w) > 640)
+          if(e.phy->x > 640 || (e.phy->x + e.rend->w) > 640)
           {
             e.phy->x -= e.phy->vx ; e.phy->vx = -e.phy->vx;
           }
           //Avoid screen y collision.
-          if(e.phy->y >360||  (e.phy->y + e.h) >360)
+          if(e.phy->y >360||  (e.phy->y + e.rend->h) >360)
           {
             e.phy->y -= e.phy->vy ; e.phy->vy = -e.phy->vy;
           }

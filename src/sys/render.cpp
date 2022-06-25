@@ -38,14 +38,14 @@ namespace ECS {
                     //screen += e.y*m_w +e.x; //necesito saltar y veces para colocarme en su sitio, y despues solamente recorrer la X. 
                     //ya estoy colocado en la pantalla, ahora necesito recorrecor mi sprite 
                     //Recorro el alto, y voy rellando el ancho , copiando my entiti al screen. 
-                    auto sprite_it = begin(e.sprite);
+                    auto sprite_it = begin(e.rend->sprite);
                     //  auto sprite_it = e.sprite.data() otra forma igual al hacer. 
-                    for(size_t i = 0; i<(e.h); ++i)
+                    for(size_t i = 0; i<(e.rend->h); ++i)
                     {
                     //cuando tenemos un vector y queremos copiar, usamos esta tecnica. 
-                    std::copy(sprite_it, (sprite_it + e.w), screen);
+                    std::copy(sprite_it, (sprite_it + e.rend->w), screen);
                     //actualizo sprite_it a la siguiente linea 
-                    sprite_it += e.w; 
+                    sprite_it += e.rend->w; 
                     //Salto la pantalla 
                     screen += m_w;
 

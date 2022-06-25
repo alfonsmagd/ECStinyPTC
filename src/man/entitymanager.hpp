@@ -1,8 +1,8 @@
 #pragma once 
 
 #include "cstdint"
-#include <memory>
 #include <vector> 
+#include <string_view>
 #include <man/componentstorage.hpp>
 #include <util/typealias.hpp>
 #include <util/gamecontext.hpp>
@@ -18,7 +18,7 @@ namespace ECS
        
         //Definimos el tam total de numeros de entidades que vamos a reservar.
         static constexpr std::size_t kNUMINITIALENTITIES {1000};
-        void createEntity(uint32_t x, uint32_t y, std::string filename);
+        void createEntity(uint32_t x, uint32_t y, const std::string_view filename);
         
         explicit EntityManager_t();
         
