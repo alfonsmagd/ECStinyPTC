@@ -19,7 +19,7 @@ namespace ECS
         
         bool update(const GameContext_t& g) const ;
         void drawSprite();
-        void drawAllEntities(const Vec_t<Entity_t>& entities) const;
+        void drawAllEntities(const GameContext_t& g) const;
 
         //Constantes 
 

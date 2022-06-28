@@ -1,3 +1,4 @@
+
 #include <man/entitymanager.hpp>
 
 namespace ECS {
@@ -9,6 +10,28 @@ namespace ECS {
         
     }
     
+
+   Entity_t* 
+   EntityManager_t::getEntitybyID(EntityID_t eid){
+
+    auto eptr = const_cast<const EntityManager_t*>(this)->getEntitybyID(eid);
+    return const_cast<Entity_t*>(eptr);
+       
+   } 
+
+   const Entity_t* 
+   EntityManager_t::getEntitybyID(EntityID_t eid) const{
+    //Encuentra el ID. 
+    auto it = std::find_if(m_Entity.begin(),m_Entity.end(),
+    [&](const Entity_t e){return e.entityID ==eid;});
+
+    if(it == m_Entity.end()) return nullptr;
+     
+    return it.base();
+       
+   } 
+
+
     //CreateEntity
     void 
     EntityManager_t::createEntity(uint32_t x, uint32_t y, 

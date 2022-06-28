@@ -18,7 +18,7 @@ namespace ECS {
 
     }
 
-    void RenderSystem_t::drawAllEntities(const Vec_t<Entity_t>& entities) const {
+    void RenderSystem_t::drawAllEntities(const GameContext_t& g) const {
 
         //Devuelve el vector de entidades que dibujaremos una a una
         
@@ -27,25 +27,29 @@ namespace ECS {
         
             auto getPosicionScreenXY = [&](uint32_t x, uint32_t y){return screen + y*m_w +x;};
             //funcion lambda para simplificar los calculos. usamos & para referencia o = para copia. 
-            auto drawEntity = [&](const Entity_t& e ){
+            auto drawEntity = [&](const RenderComponent_t& rc ){
             //Es decir cada vez que queramos dibuajr todas las entidades, neceitamos obtener el puntero
             //de la pantalla , para poder ubicarnos , el puntero de la pantalla siempre va a tener un origen,begin(), 
             //m_framebuffer
+               auto eptr =   g.getEntitybyID(rc.getEntityID());
+
                 screen = m_framebuffer.get();
-                if(e.phy != nullptr){
-                    screen = getPosicionScreenXY(e.phy->x,e.phy->y);
+                if(eptr->phy != nullptr){
+
+                    //Other wey auto& e = *ptr;
+                    screen = getPosicionScreenXY(eptr->phy->x, eptr->phy->y);
                     //puntero a la pantalla 
                     //screen += e.y*m_w +e.x; //necesito saltar y veces para colocarme en su sitio, y despues solamente recorrer la X. 
                     //ya estoy colocado en la pantalla, ahora necesito recorrecor mi sprite 
                     //Recorro el alto, y voy rellando el ancho , copiando my entiti al screen. 
-                    auto sprite_it = begin(e.rend->sprite);
+                    auto sprite_it = begin(eptr->rend->sprite);
                     //  auto sprite_it = e.sprite.data() otra forma igual al hacer. 
-                    for(size_t i = 0; i<(e.rend->h); ++i)
+                    for(size_t i = 0; i<(eptr->rend->h); ++i)
                     {
                     //cuando tenemos un vector y queremos copiar, usamos esta tecnica. 
-                    std::copy(sprite_it, (sprite_it + e.rend->w), screen);
+                    std::copy(sprite_it, (sprite_it + eptr->rend->w), screen);
                     //actualizo sprite_it a la siguiente linea 
-                    sprite_it += e.rend->w; 
+                    sprite_it += eptr->rend->w; 
                     //Salto la pantalla 
                     screen += m_w;
 
@@ -53,7 +57,9 @@ namespace ECS {
                 }
 
             };
-            std::for_each(begin(entities),end(entities),drawEntity);
+
+            auto& rendcomp = g.getRenderComponents();
+            std::for_each(begin(rendcomp),end(rendcomp),drawEntity);
 
         //for(auto& e:entities)
 
@@ -93,7 +99,7 @@ namespace ECS {
         std::fill(screen, screen+size,Kg);
         //std::fill(screen+(size/2)+1,screen + size, Kr); //Rellena el ptr desde inicio (screen hsata el final. )
 
-		drawAllEntities(g.getEntities()); 
+		drawAllEntities(g); 
 		ptc_update(screen);
 
         return !ptc_process_events();

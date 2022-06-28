@@ -35,7 +35,7 @@ RenderComponent_t::convertSpriteRGBAtoBGRA(std::vector<unsigned char>& pixels){
                 static_cast<uint32_t>(*(p+0))<<16 |
                 static_cast<uint32_t>(*(p+1))<<8  |
                 static_cast<uint32_t>(*(p+2))     |
-                static_cast<uint32_t>(*(p+4))<<24 ;
+                static_cast<uint32_t>(*(p+3))<<24 ;
 
                 sprite.push_back(pixelaux);
                 
