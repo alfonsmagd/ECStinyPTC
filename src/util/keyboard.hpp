@@ -2,9 +2,12 @@
 #include <X11/keysym.h>
 #include <unordered_map>
 
+
 namespace ECS {
 
 struct KeyBoard_t{
+
+    using OptionalIteratorUMap = std::optional<std::unordered_map<KeySym,bool>::iterator>;
 
     explicit KeyBoard_t() = default;
     //Only KeyBoard will be build.
@@ -16,13 +19,16 @@ struct KeyBoard_t{
 
 
     //This function returns is Key is pressed. 
-    bool isKeyPressed(KeySym key) const noexcept;
+    bool isKeyPressed(KeySym key)   noexcept;
 
     void keyPressedOn(KeySym key)   noexcept;
     void keyReleased (KeySym key)   noexcept;
 
+    OptionalIteratorUMap getMapIterator(KeySym key) noexcept;
 
     private:
+
+    
 
     std::unordered_map<KeySym,bool> m_pressedkey {
 
