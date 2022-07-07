@@ -18,9 +18,6 @@ namespace ECS
         bool update( GameContext_t& g) const ;
 
 
-        
-
-
     };
 
 
