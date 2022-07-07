@@ -42,6 +42,8 @@
 extern "C" {
 #endif /* __cplusplus */
 
+void ptc_set_on_keypress(void (*onkeypress)(KeySym));
+void ptc_set_on_keyrelease(void (*onkeyrelease)(KeySym));
 int ptc_open(const char *title, int width, int height);
 int ptc_update(void *buffer);
 void ptc_close(void);
@@ -57,6 +59,8 @@ int ptc_process_events(void);
 
 #ifdef __PTC_FROM_SOURCE
 
+static void (*ptc_presskeyON)(KeySym);
+static void (*ptc_keyRelease)(KeySym); 
 static Display *ptc_display;
 static int ptc_screen;
 static int ptc_screen_width;

@@ -37,12 +37,19 @@
 
 /* Open the screen */
 
+void ptc_clearkeys(KeySym key){
+
+}
+
 int ptc_open(const char *title, int width, int height) {
   /* Open a display on the current root window */
   ptc_display = XOpenDisplay(NULL);
   if (ptc_display == NULL) {
     return PTC_FAILURE;
   }
+  //Default keyboard when initialize 
+  ptc_keyRelease = ptc_clearkeys;
+  ptc_presskeyON = ptc_clearkeys;
   /* Get the default screen associated with the previously opened display */
   ptc_screen = DefaultScreen(ptc_display);
   /* Get the default visual */
@@ -199,6 +206,13 @@ int ptc_update(void *buffer) {
 
 /* Process events */
 
+void ptc_set_on_keypress(void (*onkeypress)(KeySym)){
+  ptc_keyRelease = onkeypress;
+}
+void ptc_set_on_keyrelease(void (*onkeyrelease)(KeySym)){
+  ptc_presskeyON = onkeyrelease;
+}
+
 int ptc_process_events(void) {
   XEvent ptc_xevent;
   KeySym ptc_keysym;
@@ -207,9 +221,12 @@ int ptc_process_events(void) {
     /* Get the next event in queue */
     XNextEvent(ptc_display, &ptc_xevent);
     /* Check if it's a keypress event */
-    if (ptc_xevent.type == KeyPress) {
+    if (ptc_xevent.type == KeyPress || ptc_xevent.type == KeyRelease) {
       /* Get the keysym */
+      if(ptc_xevent.type == KeyPress){
       ptc_keysym = XLookupKeysym(&ptc_xevent.xkey, 0);
+      ptc_presskeyON(ptc_keysym);
+     
       /* Check if the key pressed was a function one */
       if ((ptc_keysym >> 8) == __PTC_FUNCTION_KEY__) {
         /* Check if it was the escape key */
@@ -217,7 +234,13 @@ int ptc_process_events(void) {
           return PTC_SUCCESS;
         }
       }
+    }//end keypress ?
+      else
+      {
+      ptc_keyRelease(ptc_keysym);
+      }  
     }
+    
   }
   return PTC_FAILURE;
 }
