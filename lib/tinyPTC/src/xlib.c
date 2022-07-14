@@ -1,24 +1,23 @@
-/*
- * TinyPTC x11 v0.7.3 Raw XLib target
- * Copyright (C) 2000-2002 Alessandro Gatti <a.gatti@tiscali.it>
- *
- * http://www.sourceforge.net/projects/tinyptc/
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
- *
- */
+//
+// This file is part of tinyPTC, UA version 2019
+// Based on TinyPTC-X11-0.7.3 Raw XLib target
+// Copyright (C) 2002 by Alessandro Gatti (a.gatti@tiscali.it)
+// Copyright (C) 2019 by Francisco J. Gallego-Durán (@FranGallegoBR)
+// 
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+//
 
 /* #includes */
 
@@ -37,8 +36,7 @@
 
 /* Open the screen */
 
-void ptc_clearkeys(KeySym key){
-
+void ptc_do_nothing(KeySym a) {
 }
 
 int ptc_open(const char *title, int width, int height) {
@@ -47,9 +45,10 @@ int ptc_open(const char *title, int width, int height) {
   if (ptc_display == NULL) {
     return PTC_FAILURE;
   }
-  //Default keyboard when initialize 
-  ptc_keyRelease = ptc_clearkeys;
-  ptc_presskeyON = ptc_clearkeys;
+  // Set PTC keypress and release
+  ptc_presskeyON   = ptc_do_nothing;
+  ptc_keyRelease = ptc_do_nothing;
+
   /* Get the default screen associated with the previously opened display */
   ptc_screen = DefaultScreen(ptc_display);
   /* Get the default visual */
@@ -136,7 +135,7 @@ int ptc_open(const char *title, int width, int height) {
   /* Set the window's name */
   XStoreName(ptc_display, ptc_window, title);
   /* Tell the server to report only keypress-related events */
-  XSelectInput(ptc_display, ptc_window, KeyPressMask | KeyReleaseMask);
+  XSelectInput(ptc_display, ptc_window, KeyPressMask | KeyReleaseMask );
   /* Initialize window's sizehint definition structure */
   ptc_window_sizehints.flags = PPosition | PMinSize | PMaxSize;
   ptc_window_sizehints.x = 0;
@@ -206,12 +205,15 @@ int ptc_update(void *buffer) {
 
 /* Process events */
 
-void ptc_set_on_keypress(void (*onkeypress)(KeySym)){
-  ptc_keyRelease = onkeypress;
+void ptc_set_on_keypress  ( void (*onkeypress)  (KeySym) ) {
+  printf("Call onekeypress\n");
+  ptc_presskeyON = onkeypress;
 }
-void ptc_set_on_keyrelease(void (*onkeyrelease)(KeySym)){
-  ptc_presskeyON = onkeyrelease;
+void ptc_set_on_keyrelease( void (*onkeyrelease)(KeySym) ) {
+  printf("Call onekeyrelease\n");
+  ptc_keyRelease = onkeyrelease;
 }
+
 
 int ptc_process_events(void) {
   XEvent ptc_xevent;
@@ -220,27 +222,25 @@ int ptc_process_events(void) {
   if (XPending(ptc_display)) {
     /* Get the next event in queue */
     XNextEvent(ptc_display, &ptc_xevent);
-    /* Check if it's a keypress event */
+    /* Check if it's a key event */
     if (ptc_xevent.type == KeyPress || ptc_xevent.type == KeyRelease) {
       /* Get the keysym */
-      if(ptc_xevent.type == KeyPress){
       ptc_keysym = XLookupKeysym(&ptc_xevent.xkey, 0);
-      ptc_presskeyON(ptc_keysym);
-     
-      /* Check if the key pressed was a function one */
-      if ((ptc_keysym >> 8) == __PTC_FUNCTION_KEY__) {
-        /* Check if it was the escape key */
-        if ((ptc_keysym & 0xFF) == __PTC_ESCAPE_KEY__) {
-          return PTC_SUCCESS;
+
+      if (ptc_xevent.type == KeyPress) {
+        ptc_presskeyON(ptc_keysym);
+        /* Check if the key pressed was a function one */
+        if ((ptc_keysym >> 8) == __PTC_FUNCTION_KEY__) {
+          /* Check if it was the escape key */
+          if ((ptc_keysym & 0xFF) == __PTC_ESCAPE_KEY__) {
+            return PTC_SUCCESS;
+          }
         }
+      } else {
+        ptc_keyRelease(ptc_keysym);
+        
       }
-    }//end keypress ?
-      else
-      {
-      ptc_keyRelease(ptc_keysym);
-      }  
     }
-    
   }
   return PTC_FAILURE;
 }

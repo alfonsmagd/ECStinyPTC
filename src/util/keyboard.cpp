@@ -1,5 +1,5 @@
 #include "keyboard.hpp"
-
+#include <iostream>
 namespace ECS {
 
 
@@ -7,6 +7,7 @@ namespace ECS {
     bool 
     KeyBoard_t::isKeyPressed(KeySym key)  noexcept{
 
+        
         if(auto it = getMapIterator(key))
             return (*it)->second;
         return false;
@@ -27,6 +28,7 @@ namespace ECS {
     void 
     KeyBoard_t::keyPressedOn(KeySym key)   noexcept{
 
+       
         if(auto it = getMapIterator(key))
            (*it)->second = true;
 

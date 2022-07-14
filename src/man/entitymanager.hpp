@@ -19,10 +19,10 @@ namespace ECS
        
         //Definimos el tam total de numeros de entidades que vamos a reservar.
         static constexpr std::size_t kNUMINITIALENTITIES {1000};
-        void createEntity(uint32_t x, uint32_t y, const std::string_view filename);
+        Entity_t& createEntity(uint32_t x, uint32_t y, const std::string_view filename);
         
         explicit EntityManager_t();
-        
+        void  addInputController(Entity_t& e);
         //Estoy devolviendo una copia de de entidades, para ello hay que devolver
         //una referencia para para que no este creando cada vez que se se llama 
         //de momento todo lectura y se pone un const a la derecha y aparte 
@@ -32,11 +32,15 @@ namespace ECS
         const Vec_t<Entity_t>& getEntities()  const override  { return m_Entity;}
               Vec_t<Entity_t>& getEntities()        override  { return m_Entity;}
         
+        //Get physics Cpomonent from ComponentStorage and these are inherence about GameContext
         const Vec_t<PhysicsComponent_t>& getPhysicsComponents() const override {return m_components.getPhysicsComponents();}
               Vec_t<PhysicsComponent_t>& getPhysicsComponents()       override {return m_components.getPhysicsComponents();}
-         
+         //Get Render Component from ComponentStorage ande this are inherence about GameContext
          const Vec_t<RenderComponent_t>& getRenderComponents() const override {return m_components.getRenderComponents();}
                Vec_t<RenderComponent_t>& getRenderComponents()       override {return m_components.getRenderComponents();}
+
+         const Vec_t<InputComponent_t>& getInputComponents() const override {return m_components.getInputComponents();}
+               Vec_t<InputComponent_t>& getInputComponents()       override {return m_components.getInputComponents();}
 
         const Entity_t* getEntitybyID(EntityID_t eid) const override;
               Entity_t* getEntitybyID(EntityID_t eid)       override;         

@@ -1,7 +1,5 @@
 #pragma once 
 
-#include "cstdint"
-#include <util/gamecontext.hpp>
 #include <util/typealias.hpp>
 #include <util/keyboard.hpp>
 

@@ -28,7 +28,6 @@ struct KeyBoard_t{
 
     private:
 
-    
 
     std::unordered_map<KeySym,bool> m_pressedkey {
 

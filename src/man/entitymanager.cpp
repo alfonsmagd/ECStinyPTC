@@ -23,7 +23,7 @@ namespace ECS {
    EntityManager_t::getEntitybyID(EntityID_t eid) const{
     //Encuentra el ID. 
     auto it = std::find_if(m_Entity.begin(),m_Entity.end(),
-    [&](const Entity_t e){return e.entityID ==eid;});
+    [&](const Entity_t e){return e.getEntityID() ==eid;});
 
     if(it == m_Entity.end()) return nullptr;
      
@@ -33,13 +33,14 @@ namespace ECS {
 
 
     //CreateEntity
-    void 
+    Entity_t&
     EntityManager_t::createEntity(uint32_t x, uint32_t y, 
                                   const std::string_view filename)
     {
         auto& e = m_Entity.emplace_back();
-        auto& ph = m_components.createPhysicsComponent(e.entityID);
-        auto& rn = m_components.createRenderComponent(e.entityID);
+        auto e_id = e.getEntityID();
+        auto& ph = m_components.createPhysicsComponent(e_id);
+        auto& rn = m_components.createRenderComponent(e_id);
         
         rn.loadFromFile(filename);
 
@@ -57,7 +58,16 @@ namespace ECS {
         //    element = color;
         //}
       
-        
+        return e;
+    }
+
+    void 
+    EntityManager_t::addInputController(Entity_t& e){
+
+        if(!e.inp){
+        auto& cmp = m_components.createInputComponent(e.getEntityID());
+        e.inp = &cmp;
+        }
     }
     
 }
