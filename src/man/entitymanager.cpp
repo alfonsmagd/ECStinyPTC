@@ -39,6 +39,7 @@ namespace ECS {
     {
         auto& e = m_Entity.emplace_back();
         auto e_id = e.getEntityID();
+        printf("%d",e_id);
         auto& ph = m_components.createPhysicsComponent(e_id);
         auto& rn = m_components.createRenderComponent(e_id);
         

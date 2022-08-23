@@ -13,6 +13,8 @@ struct Component_t {
     {}
 
     constexpr EntityID_t getEntityID() const noexcept{ return entityID;}
+
+    
     
 private:
     ComponentID_t ComponentID { ++nextComponentID};

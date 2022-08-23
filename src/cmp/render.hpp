@@ -16,6 +16,9 @@
         explicit RenderComponent_t(EntityID_t eid) : Component_t(eid)
         {}
 
+        static ComponentTypeID_t getComponentTypeID() noexcept{
+            return static_cast<ComponentTypeID_t>(3);
+        }
         //Load from file function, to load file . 
         void loadFromFile(const std::string_view fileName);
 
