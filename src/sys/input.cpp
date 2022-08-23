@@ -56,11 +56,13 @@ namespace ECS
                 //std::cout<<"Acedemos a componentes phys\n";
                 //Now we can modify because phycomponent exists inside entity. 
                 auto& phy = *(eptr->phy);
-                if(ms_keyboard.isKeyPressed(inp.key_LEFT))      phy.vx = -1;
-                if(ms_keyboard.isKeyPressed(inp.key_RIGHT))     phy.vx =  1;
-                if(ms_keyboard.isKeyPressed(inp.key_DOWN))      phy.vy =  1;
-                if(ms_keyboard.isKeyPressed(inp.key_UP))        phy.vy = -1;
-            
+                phy.vx = phy.vy = 0;
+                if(ms_keyboard.isKeyPressed(inp.key_LEFT))      phy.vx = -1; 
+                if(ms_keyboard.isKeyPressed(inp.key_RIGHT))     phy.vx =  1;   
+                if(ms_keyboard.isKeyPressed(inp.key_DOWN))      phy.vy =  1; 
+                if(ms_keyboard.isKeyPressed(inp.key_UP))        phy.vy = -1; 
+
+             
 
             }
 

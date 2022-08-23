@@ -23,6 +23,7 @@ namespace ECS {
 
         virtual const Vec_t<InputComponent_t>& getInputComponents() const  = 0; //only read 
         virtual       Vec_t<InputComponent_t>& getInputComponents()        = 0;
+        
     };
 
 
