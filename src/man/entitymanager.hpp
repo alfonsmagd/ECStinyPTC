@@ -33,14 +33,14 @@ namespace ECS
               Vec_t<Entity_t>& getEntities()        override  { return m_Entity;}
         
         //Get physics Cpomonent from ComponentStorage and these are inherence about GameContext
-        const Vec_t<PhysicsComponent_t>& getPhysicsComponents() const override {return m_components.getPhysicsComponents();}
-              Vec_t<PhysicsComponent_t>& getPhysicsComponents()       override {return m_components.getPhysicsComponents();}
+        const Vec_t<PhysicsComponent_t>& getPhysicsComponents() const override {return m_components.getComponents<PhysicsComponent_t>();}
+              Vec_t<PhysicsComponent_t>& getPhysicsComponents()       override {return m_components.getComponents<PhysicsComponent_t>();}
          //Get Render Component from ComponentStorage ande this are inherence about GameContext
-         const Vec_t<RenderComponent_t>& getRenderComponents() const override {return m_components.getRenderComponents();}
-               Vec_t<RenderComponent_t>& getRenderComponents()       override {return m_components.getRenderComponents();}
+         const Vec_t<RenderComponent_t>& getRenderComponents() const override {return m_components.getComponents<RenderComponent_t>();}
+               Vec_t<RenderComponent_t>& getRenderComponents()       override {return m_components.getComponents<RenderComponent_t>();}
 
-         const Vec_t<InputComponent_t>& getInputComponents() const override {return m_components.getInputComponents();}
-               Vec_t<InputComponent_t>& getInputComponents()       override {return m_components.getInputComponents();}
+         const Vec_t<InputComponent_t>& getInputComponents() const override {return m_components.getComponents<InputComponent_t>();}
+               Vec_t<InputComponent_t>& getInputComponents()       override {return m_components.getComponents<InputComponent_t>();}
 
         const Entity_t* getEntitybyID(EntityID_t eid) const override;
               Entity_t* getEntitybyID(EntityID_t eid)       override;         

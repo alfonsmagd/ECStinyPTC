@@ -31,7 +31,6 @@ int main(){
 		ECS::InputSystem_t     InputSys;
 		while(Render.update(EntityMan)){
 			
-			
 			PhySys.update(EntityMan);
 			ColliSys.update(EntityMan);
 			InputSys.update(EntityMan);

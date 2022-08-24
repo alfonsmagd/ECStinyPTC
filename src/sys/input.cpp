@@ -32,13 +32,7 @@ namespace ECS
         ptc_set_on_keyrelease(onkeyrelease);
      }   
         
-
-
-
     //Functions 
-
-    
-
 
     bool 
     InputSystem_t::update(GameContext_t& g) const {
@@ -61,8 +55,6 @@ namespace ECS
                 if(ms_keyboard.isKeyPressed(inp.key_RIGHT))     phy.vx =  1;   
                 if(ms_keyboard.isKeyPressed(inp.key_DOWN))      phy.vy =  1; 
                 if(ms_keyboard.isKeyPressed(inp.key_UP))        phy.vy = -1; 
-
-             
 
             }
 

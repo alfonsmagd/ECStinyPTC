@@ -12,7 +12,13 @@ namespace ECS
 
     //La idea es crear una interfaz que me permita ir accediendo a los diferentes vectores de componentes a traves de un puntero de direccion almacenado en un
     //unordered_map. 
-    struct ComponentVectorBase_t{};
+    struct ComponentVectorBase_t{
+        //Es muy importante aclarar que para evitar memorys leaks cambiemos a polimorfimos. 
+        //De esta forma cuando se llame al destructor del map, la clase propia llamara a su constructor
+        //y  al de la clase Base. 
+        //Al ser clase polimorfica se necesita usar despues dynamic_cast mejor que static_cast. 
+        virtual ~ComponentVectorBase_t() = default;
+    };
 
     template <typename CMP_T>
     struct ComponentVector_t : ComponentVectorBase_t{
@@ -68,8 +74,8 @@ namespace ECS
             auto typeID = CMP_T::getComponentTypeID();
             auto it = (m_componentVectors.find(typeID));
             if(it != m_componentVectors.end()){
-                auto* aux = static_cast<ComponentVector_t<CMP_T>*>(it->second.get());
-                vcmp = &aux->components;
+                auto* aux = dynamic_cast<ComponentVector_t<CMP_T>*>(it->second.get());
+                if(aux != nullptr) vcmp = &aux->components;
             }
             else{
                 vcmp = &createComponentVector<CMP_T>();
@@ -84,8 +90,8 @@ namespace ECS
             auto typeID = CMP_T::getComponentTypeID();
             auto it = (m_componentVectors.find(typeID));
             if(it != m_componentVectors.end()){
-                auto* aux = static_cast<ComponentVector_t<CMP_T>*>(it->second.get());
-                vcmp = &aux->components;
+                auto* aux = dynamic_cast<ComponentVector_t<CMP_T>*>(it->second.get());
+                if(aux != nullptr) vcmp = &aux->components;
             }
             else{
                 //vcmp = &createComponentVector<CMP_T>();
@@ -94,25 +100,15 @@ namespace ECS
             return *vcmp;
         }
 
-
-
         //Physycs Components Get 
-        //const Vec_t<PhysicsComponent_t>& getPhysicsComponents() const  {return m_physicsComponents;}
-        //      Vec_t<PhysicsComponent_t>& getPhysicsComponents()        {return m_physicsComponents; }
-
          const Vec_t<PhysicsComponent_t>& getPhysicsComponents() const  {return getComponents<PhysicsComponent_t>();}
                Vec_t<PhysicsComponent_t>& getPhysicsComponents()        {return getComponents<PhysicsComponent_t>(); }
 
         //Render Components Get        
-        //const Vec_t<RenderComponent_t>& getRenderComponents() const  {return m_renderComponents;}
-        //       Vec_t<RenderComponent_t>& getRenderComponents()       {return m_renderComponents;} 
          const Vec_t<RenderComponent_t>& getRenderComponents() const  {return getComponents<RenderComponent_t>();}
                Vec_t<RenderComponent_t>& getRenderComponents()        {return getComponents<RenderComponent_t>();} 
 
         //Input Components Get        
-        //const Vec_t<InputComponent_t>&  getInputComponents() const  {return m_inputComponents;}
-        //      Vec_t<InputComponent_t>& getInputComponents()        {return m_inputComponents;} 
-
          const Vec_t<InputComponent_t>&  getInputComponents() const  {return getComponents<InputComponent_t>();}
                Vec_t<InputComponent_t>&  getInputComponents()        {return getComponents<InputComponent_t>();}       
 
@@ -122,11 +118,6 @@ namespace ECS
         mapComponent_t<ComponentTypeID_t,UPtr<ComponentVectorBase_t>> m_componentVectors;
 
         std::size_t m_initialsize{100};
-
-        //Vec_t<PhysicsComponent_t> m_physicsComponents {};
-        //Vec_t<RenderComponent_t>  m_renderComponents  {};
-        //Vec_t<InputComponent_t>   m_inputComponents   {};
-
 
 
     };
