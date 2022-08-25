@@ -28,6 +28,21 @@ namespace ECS
         //de momento todo lectura y se pone un const a la derecha y aparte 
         //este metodo no cambia los valores y por eso tiene const. 
         
+
+
+         template <typename CMP_T>
+         const Vec_t<CMP_T>&
+         getComponents() const{
+            return m_components.getComponents<CMP_T>();
+         }
+
+
+         template <typename CMP_T>
+         Vec_t<CMP_T>&
+         getComponents() {
+            return m_components.getComponents<CMP_T>();
+         }
+
         //El final se utiliza para que el hijo que herede de aqui no tenga que herdedar getEntities. 
         const Vec_t<Entity_t>& getEntities()  const override  { return m_Entity;}
               Vec_t<Entity_t>& getEntities()        override  { return m_Entity;}

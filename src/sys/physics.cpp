@@ -10,8 +10,8 @@ namespace ECS
 
         for(auto& phy: g.getPhysicsComponents()){
 
-          phy.x += phy.vx;
-          phy.y += phy.vy;
+            phy.x += phy.vx;
+            phy.y += phy.vy;
 
         }
 

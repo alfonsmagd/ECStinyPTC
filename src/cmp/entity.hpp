@@ -32,8 +32,8 @@
 
         template<typename CMP_T>
         const CMP_T* getComponent() const {
-            auto* cmp = static_cast<Entity_t*>(this)->getComponent<CMP_T>();
-            return static_cast<const CMP_T*>(cmp);
+            auto* cmp = const_cast<Entity_t*>(this)->getComponent<CMP_T>();
+            return const_cast<const CMP_T*>(cmp);
         }
      
         //Differentes Entities

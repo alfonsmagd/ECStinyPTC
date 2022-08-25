@@ -6,14 +6,14 @@
 namespace ECS
 {
     
-    struct  GameContext_t ;
+   template <typename GameCTX_T>
     
     struct InputSystem_t {
 
         explicit InputSystem_t();
         
         
-        bool update( GameContext_t& g) const ;
+        bool update( GameCTX_T& g) const ;
 
         private:
         

@@ -42,14 +42,17 @@ namespace ECS {
         printf("%d",e_id);
         auto& ph = m_components.createPhysicsComponent(e_id);
         auto& rn = m_components.createRenderComponent(e_id);
-        
+        ph.x = x; ph.y = y;
         rn.loadFromFile(filename);
 
+        e.addComponent<PhysicsComponent_t>(ph);
+        e.addComponent<RenderComponent_t>(rn);
+/*
         e.phy = &ph;
         e.rend  = &rn;
         ph.x = x; 
         ph.y = y;
-
+*/
         //Update position. 
         //std::fill(begin(e.sprite),end(e.sprite),color);
         
@@ -65,10 +68,8 @@ namespace ECS {
     void 
     EntityManager_t::addInputController(Entity_t& e){
 
-        if(!e.inp){
-        auto& cmp = m_components.createInputComponent(e.getEntityID());
-        e.inp = &cmp;
-        }
+            auto& inp = m_components.createInputComponent(e.getEntityID());
+            e.addComponent(inp);
     }
     
 }
