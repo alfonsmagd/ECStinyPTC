@@ -2,10 +2,10 @@
 #include <iostream>
 #include <memory>
 #include <sys/input.tpp>
-#include <sys/render.hpp>
-#include <man/entitymanager.hpp>
-#include <sys/physics.hpp>
-#include <sys/collision.hpp>
+#include <sys/render.tpp>
+#include <ecs/man/entitymanager.hpp>
+#include <sys/physics.tpp>
+#include <sys/collision.tpp>
 
 typedef u_int32_t uint32_t;
 
@@ -16,10 +16,10 @@ int main(){
 	
   try{
 
-    
-	ECS::PhysicsSystem_t PhySys;
+    const ECS::RenderSystem_t<ECS::EntityManager_t> Render(KSCRWEIGHT,KSCRHEIGHT);
+	ECS::PhysicsSystem_t<ECS::EntityManager_t> PhySys;
 	ECS::EntityManager_t EntityMan;
-	ECS::CollisionSystem_t ColliSys;
+	ECS::CollisionSystem_t<ECS::EntityManager_t> ColliSys;
 	
 	EntityMan.createEntity(0,0,"assets/pica1.png");
 	EntityMan.createEntity(222,0,"assets/run-1.png");
@@ -27,7 +27,7 @@ int main(){
 	//EntityMan.createEntity(0,0,34,34,0x000000FF);
 	EntityMan.addInputController(e_player);
 	
-	const ECS::RenderSystem_t Render(KSCRWEIGHT,KSCRHEIGHT);
+	
 		ECS::InputSystem_t<ECS::EntityManager_t>   InputSys;
 		while(Render.update(EntityMan)){
 

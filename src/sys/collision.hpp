@@ -1,13 +1,12 @@
 #pragma once 
 
 #include "cstdint"
-#include <util/gamecontext.hpp>
+#include <ecs/util/gamecontext.hpp>
 
 
 namespace ECS
 {
-    struct EntityManager_t;
-    struct  GameContext_t ;
+    template<typename GameCTX_T>
     
     struct CollisionSystem_t {
 
@@ -15,11 +14,7 @@ namespace ECS
         
         
         //se actualiza el update de nuestro colissionsystem_t
-        bool update( GameContext_t& g) const ;
-
-
-        
-
+        bool update( GameCTX_T& g) const ;
 
     };
 

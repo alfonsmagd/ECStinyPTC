@@ -1,7 +1,7 @@
 #pragma once 
 
-#include <util/typealias.hpp>
-#include <util/keyboard.hpp>
+#include <ecs/util/typealias.hpp>
+#include <ecs/util/keyboard.hpp>
 
 namespace ECS
 {

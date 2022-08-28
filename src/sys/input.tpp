@@ -1,7 +1,7 @@
 #include <sys/input.hpp>
 #include <X11/X.h>
 #include <X11/keysym.h>
-#include <util/gamecontext.hpp>
+#include <ecs/util/gamecontext.hpp>
 #include <iostream>
 
 extern "C" {

@@ -1,21 +1,20 @@
 #pragma once 
 
 #include "cstdint"
-#include <util/gamecontext.hpp>
+//#include <ecs/util/gamecontext.hpp>
 
 
 namespace ECS
 {
-    struct EntityManager_t;
-    struct  GameContext_t ;
-    
+  
+    template <typename GameCTX_T>
     struct PhysicsSystem_t {
 
         explicit PhysicsSystem_t() = default; 
         
         
         //se modifican las propiedades fisicas velocidad de las entidades. 
-        bool update( GameContext_t& g) const ;
+        bool update( GameCTX_T& g) const ;
 
 
     };
