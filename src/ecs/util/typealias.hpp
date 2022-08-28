@@ -3,8 +3,7 @@
 #include <vector>
 #include <memory>
 #include <unordered_map>
-//#include <cmp/entity.hpp> avoid circular declaration 
-//#include <cmp/physics.hpp>
+
 
 namespace ECS {
 

@@ -1,11 +1,11 @@
 #include "tinyPTC/src/tinyptc.h"
 #include <iostream>
 #include <memory>
-#include <sys/input.tpp>
-#include <sys/render.tpp>
+#include <game/sys/input.tpp>
+#include <game/sys/render.tpp>
 #include <ecs/man/entitymanager.hpp>
-#include <sys/physics.tpp>
-#include <sys/collision.tpp>
+#include <game/sys/physics.tpp>
+#include <game/sys/collision.tpp>
 
 typedef u_int32_t uint32_t;
 
@@ -17,7 +17,7 @@ int main(){
   try{
 
     const ECS::RenderSystem_t<ECS::EntityManager_t> Render(KSCRWEIGHT,KSCRHEIGHT);
-	ECS::PhysicsSystem_t<ECS::EntityManager_t> PhySys;
+	PhysicsSystem_t<ECS::EntityManager_t> PhySys;
 	ECS::EntityManager_t EntityMan;
 	ECS::CollisionSystem_t<ECS::EntityManager_t> ColliSys;
 	
@@ -28,7 +28,7 @@ int main(){
 	EntityMan.addInputController(e_player);
 	
 	
-		ECS::InputSystem_t<ECS::EntityManager_t>   InputSys;
+	InputSystem_t<ECS::EntityManager_t>   InputSys;
 		while(Render.update(EntityMan)){
 
 			 PhySys.update(EntityMan);

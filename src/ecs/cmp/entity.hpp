@@ -1,8 +1,8 @@
 #pragma once
 
-#include <ecs/cmp/inputcomponent.hpp>
-#include <ecs/cmp/render.hpp>
-#include <ecs/cmp/physics.hpp>
+#include <game/cmp/inputcomponent.hpp>
+#include <game/cmp/render.hpp>
+#include <game/cmp/physics.hpp>
 #include <ecs/util/typealias.hpp>
 
  //Entity desing 

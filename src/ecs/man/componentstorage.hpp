@@ -1,9 +1,9 @@
 #pragma once
 
 #include <vector>
-#include <ecs/cmp/inputcomponent.hpp>
-#include <ecs/cmp/physics.hpp>
-#include <ecs/cmp/render.hpp>
+#include <game/cmp/inputcomponent.hpp>
+#include <game/cmp/physics.hpp>
+#include <game/cmp/render.hpp>
 #include <ecs/util/typealias.hpp>
 
 namespace ECS
@@ -32,9 +32,6 @@ namespace ECS
         explicit ComponentStorage_t(std::size_t initialize) : m_initialsize(initialize)
         {
 
-            // m_physicsComponents.reserve(initialize);
-            // m_renderComponents.reserve(initialize);
-            // m_inputComponents.reserve(10);
         }
         // Delete all ilegal constructor, because i use only a singletone model to storage all component
         ComponentStorage_t(const ComponentStorage_t &) = delete;
