@@ -3,8 +3,7 @@
 #include <iostream>
 
 
-namespace ECS
-{
+
     template <typename GameCTX_T>
     bool 
     CollisionSystem_t<GameCTX_T>::update(GameCTX_T& g) const {
@@ -35,4 +34,3 @@ namespace ECS
     }
 
 
-} // namespace EC

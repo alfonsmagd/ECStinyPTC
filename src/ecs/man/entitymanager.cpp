@@ -7,7 +7,6 @@ namespace ECS {
         
         m_Entity.reserve(kNUMINITIALENTITIES);
         
-        
     }
     
 
@@ -33,6 +32,7 @@ namespace ECS {
 
 
     //CreateEntity
+    /*
     Entity_t&
     EntityManager_t::createEntity(uint32_t x, uint32_t y, 
                                   const std::string_view filename)
@@ -47,12 +47,12 @@ namespace ECS {
 
         e.addComponent<PhysicsComponent_t>(ph);
         e.addComponent<RenderComponent_t>(rn);
-/*
+
         e.phy = &ph;
         e.rend  = &rn;
         ph.x = x; 
         ph.y = y;
-*/
+
         //Update position. 
         //std::fill(begin(e.sprite),end(e.sprite),color);
         
@@ -71,5 +71,5 @@ namespace ECS {
             auto& inp = m_components.createInputComponent(e.getEntityID());
             e.addComponent(inp);
     }
-    
-}
+    */
+}// ECS NAMESPACE

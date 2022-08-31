@@ -2,7 +2,6 @@
 #include "render.hpp"
 #include <tuple>
 
-namespace ECS {
 
 
     auto
@@ -57,4 +56,3 @@ RenderComponent_t::loadFromFile(const std::string_view fileName){
 
 
 
-}//name Space ECS 

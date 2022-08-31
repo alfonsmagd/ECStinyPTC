@@ -4,8 +4,7 @@
 #include <ecs/util/gamecontext.hpp>
 
 
-namespace ECS
-{
+
     template<typename GameCTX_T>
     
     struct CollisionSystem_t {
@@ -20,5 +19,5 @@ namespace ECS
 
 
 
-} // namespace EC
+
 

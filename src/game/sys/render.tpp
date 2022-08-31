@@ -6,7 +6,7 @@
 #include <iostream>
 #include <algorithm>
 
-namespace ECS {
+
 
 
     template <typename GameCTX_T>
@@ -119,4 +119,3 @@ namespace ECS {
 
 
 
-}

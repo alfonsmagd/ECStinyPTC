@@ -6,9 +6,7 @@
 #include <ecs/cmp/entity.hpp>
 
 
-namespace ECS
-{
-  
+
     template <typename GameCTX_T>
     struct RenderSystem_t {
 
@@ -43,7 +41,4 @@ namespace ECS
 
     };
 
-
-
-} // namespace EC
 

@@ -16,13 +16,32 @@ namespace ECS
     //EntityManager implements GameCOntext_T Interface. 
     struct EntityManager_t
     {
-       
+        explicit EntityManager_t();
         //Definimos el tam total de numeros de entidades que vamos a reservar.
         static constexpr std::size_t kNUMINITIALENTITIES {1000};
-        Entity_t& createEntity(uint32_t x, uint32_t y, const std::string_view filename);
+        //Entity_t& createEntity(uint32_t x, uint32_t y, const std::string_view filename);
         
-        explicit EntityManager_t();
-        void  addInputController(Entity_t& e);
+
+        
+
+        Entity_t& createEntity(){
+            return m_Entity.emplace_back();
+        }
+
+        template <typename CMP_T>
+        CMP_T& addComponent(Entity_t& e){
+            CMP_T* cmp_ptr{e.getComponent<CMP_T>()};
+            //If component exits not create it. 
+            if(!cmp_ptr){
+             auto& cmp = m_components.createComponent<CMP_T>(e.getEntityID());
+             e.addComponent(cmp);
+             cmp_ptr = &cmp;
+            }
+            return *cmp_ptr;
+
+        }
+
+        //void  addInputController(Entity_t& e);
         //Estoy devolviendo una copia de de entidades, para ello hay que devolver
         //una referencia para para que no este creando cada vez que se se llama 
         //de momento todo lectura y se pone un const a la derecha y aparte 
@@ -67,7 +86,5 @@ namespace ECS
         Vec_t<Entity_t> m_Entity;
         
     };
-
-
 
 }

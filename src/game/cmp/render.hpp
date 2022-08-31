@@ -8,16 +8,18 @@
 #include <cstring>
 #include <ecs/cmp/component.hpp>
 #include <ecs/util/typealias.hpp>
- //Entity desing 
- namespace ECS {
 
-     struct RenderComponent_t :  public Component_t
+
+ //Entity desing 
+
+
+     struct RenderComponent_t :  public ECS::Component_t
     {
-        explicit RenderComponent_t(EntityID_t eid) : Component_t(eid)
+        explicit RenderComponent_t(ECS::EntityID_t eid) : Component_t(eid)
         {}
 
-        static ComponentTypeID_t getComponentTypeID() noexcept{
-            return static_cast<ComponentTypeID_t>(3);
+        static ECS::ComponentTypeID_t getComponentTypeID() noexcept{
+            return static_cast<ECS::ComponentTypeID_t>(3);
         }
         //Load from file function, to load file . 
         void loadFromFile(const std::string_view fileName);
@@ -30,4 +32,4 @@
         
     };
    
- }
+ 
