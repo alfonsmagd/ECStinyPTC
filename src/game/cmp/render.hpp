@@ -13,14 +13,11 @@
  //Entity desing 
 
 
-     struct RenderComponent_t :  public ECS::Component_t
+     struct RenderComponent_t :  public ECS::ComponentBase_t<RenderComponent_t>
     {
-        explicit RenderComponent_t(ECS::EntityID_t eid) : Component_t(eid)
+        explicit RenderComponent_t(ECS::EntityID_t eid) : ComponentBase_t(eid)
         {}
 
-        static ECS::ComponentTypeID_t getComponentTypeID() noexcept{
-            return static_cast<ECS::ComponentTypeID_t>(3);
-        }
         //Load from file function, to load file . 
         void loadFromFile(const std::string_view fileName);
 

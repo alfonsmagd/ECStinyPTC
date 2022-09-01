@@ -8,13 +8,13 @@
 
 
 
-struct InputComponent_t  : public ECS::Component_t{
+struct InputComponent_t  : public ECS::ComponentBase_t<InputComponent_t>{
 
-   explicit InputComponent_t (ECS::EntityID_t eid) : ECS::Component_t(eid) {};
+   explicit InputComponent_t (ECS::EntityID_t eid) : ComponentBase_t(eid) {};
 
-   static ECS::ComponentTypeID_t getComponentTypeID() noexcept{
-    return static_cast<ECS::ComponentTypeID_t>(1);
-   }
+   //static ECS::ComponentTypeID_t getComponentTypeID() noexcept{
+   // return static_cast<ECS::ComponentTypeID_t>(1);
+   //}
     
     //Declarate differntes inputs components 
 

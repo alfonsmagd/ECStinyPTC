@@ -17,11 +17,22 @@ struct Component_t {
     
     
 private:
-    ComponentID_t ComponentID { ++nextComponentID};
-    EntityID_t  entityID{0};
-    inline static ComponentID_t nextComponentID {0};
 
+    EntityID_t  entityID{0};
+    inline static ComponentTypeID_t nextTypeID {0};
+};
+
+//CRTP Pattern. 
+template <typename T>
+struct ComponentBase_t : Component_t{
+
+    explicit ComponentBase_t(EntityID_t eid) : Component_t(eid){};
+
+    static ComponentTypeID_t getComponentTypeID() noexcept {
+        static ComponentTypeID_t typeID {++nextTypeID};
+        return typeID;
+    }
 
 };
 
-}
+}//Namespace ECS 
