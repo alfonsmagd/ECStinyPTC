@@ -18,7 +18,7 @@
         bool update(const GameCTX_T& g) const ;
         void drawSprite();
         void drawAllEntities(const GameCTX_T& g) const;
-
+        void clippingSprite2D(uint32_t& h, uint32_t& w, uint32_t x, uint32_t y, uint32_t rh, uint32_t rw, uint32_t& left_off, uint32_t& up_off) const;
         //Constantes 
 
         const uint32_t Kg = 0x0000FF00; //constexpr calcula en tiempo de compilaci´on. 

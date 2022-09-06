@@ -16,17 +16,37 @@ const uint32_t KSCRHEIGHT {360} ;
 ECS::Entity_t&
 createEntity(ECS::EntityManager_t& EntityMan, uint32_t x, uint32_t y,   const std::string_view filename){
 
-auto& e = EntityMan.createEntity();
-auto& ph = EntityMan.addComponent<PhysicsComponent_t>(e);
-auto& rn = EntityMan.addComponent<RenderComponent_t>(e);
+	auto& e = EntityMan.createEntity();
+	auto& ph = EntityMan.addComponent<PhysicsComponent_t>(e);
+	auto& rn = EntityMan.addComponent<RenderComponent_t>(e);
+	auto& cll = EntityMan.addComponent<ColliderComponent_t>(e);
 
-rn.loadFromFile(filename);
-ph.x = x;
-ph.y = y; 
+	//Render component 
+	rn.loadFromFile(filename);
+	
+	ph.x = x;
+	ph.y = y; 
+	//Colliders relativos al objeto Xo = 0; Yo = 0 ; son los del entity no el absoluto de la pantalla 
+	cll.box.xLeft = 0;
+	cll.box.xRight= rn.w;
+	cll.box.yUp  = 0;
+	cll.box.yDown = rn.h;
 
-return e;
+	return e;
 
 }
+
+void
+createPlayer(ECS::EntityManager_t& EntityMan, uint32_t x, uint32_t y){
+	auto& e_player = createEntity(EntityMan,x,y,"assets/run-2.png");
+	EntityMan.addComponent<InputComponent_t>(e_player);
+}
+
+void
+createFire(ECS::EntityManager_t& EntityMan, uint32_t x, uint32_t y,   const std::string_view filename){
+		createEntity(EntityMan,x,y,"assets/rsz_d.png");
+}
+
 
 
 int main(){
@@ -41,12 +61,10 @@ int main(){
 
 	//Entities
 	ECS::EntityManager_t EntityMan{};
-	createEntity(EntityMan,0,0,"assets/pica1.png");
-	createEntity(EntityMan,222,0,"assets/run-1.png");
-	auto& e_player = createEntity(EntityMan,0,0,"assets/run-2.png");
-	//EntityMan.createEntity(0,0,34,34,0x000000FF);
-	EntityMan.addComponent<InputComponent_t>(e_player);
-	
+
+
+	createFire(EntityMan,50,50,"assets/pica1.png");
+	createPlayer(EntityMan,1,1);
 	
 	
 		while(Render.update(EntityMan)){

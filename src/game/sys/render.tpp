@@ -22,6 +22,48 @@
 
     template <typename GameCTX_T>
     void 
+    RenderSystem_t<GameCTX_T>::clippingSprite2D(uint32_t& h, uint32_t& w, uint32_t x, uint32_t y, uint32_t rh, uint32_t rw,
+    uint32_t& left_off, uint32_t& up_off) const {
+           //Horizontal clipping rules 
+                    
+                    uint32_t right_off{0};
+                    
+                    uint32_t down_off{0};
+
+                    if( x > m_w){                   //left cliping
+                       left_off = 0 - x;
+                       if(left_off < w)
+                       {     // nothing to draw
+                        x = 0;
+                        w -= left_off;
+                        }
+
+                    }else if ( x + rw >=  m_w){      //Right Cliping. 
+                        right_off = x + w - m_w;
+                        if(right_off < w)             //Nothing to draw. 
+                        w -= right_off;
+                    }
+                    
+                    //Vertical cliping. 
+                    if( y > m_h){                   //up cliping
+                       up_off = 0 - y;
+                       if(left_off >= h){     // nothing to draw
+                        y = 0;
+                        h -= up_off;
+                       }
+
+                    }else if ( y + rh >=  m_h){      //down Cliping. 
+                        down_off = y + h - m_h;
+                        if(down_off >= w){           //Nothing to draw. 
+                        h = -down_off;
+                        }
+                    }
+
+    } 
+
+
+    template <typename GameCTX_T>
+    void 
     RenderSystem_t<GameCTX_T>::drawAllEntities(const GameCTX_T& g) const {
 
         //Devuelve el vector de entidades que dibujaremos una a una
@@ -43,21 +85,37 @@
                     auto* phy = eptr->template getComponent<PhysicsComponent_t>();
                     auto* rend = eptr->template getComponent<RenderComponent_t>();
                     //Other wey auto& e = *ptr;
+                    
+                    uint32_t h{rend->h};
+                    uint32_t w{rend->w};
+                    uint32_t x{phy->x};
+                    uint32_t y{phy->y};
+
+                    uint32_t left_off{0};
+                    uint32_t up_off{0};
+
+                    clippingSprite2D(h,w,x,y,rend->h,rend->w,left_off,up_off);
                     screen = getPosicionScreenXY(phy->x, phy->y);
                     //puntero a la pantalla 
                     //screen += e.y*m_w +e.x; //necesito saltar y veces para colocarme en su sitio, y despues solamente recorrer la X. 
                     //ya estoy colocado en la pantalla, ahora necesito recorrecor mi sprite 
                     //Recorro el alto, y voy rellando el ancho , copiando my entiti al screen. 
-                    auto sprite_it = begin(rend->sprite);
+                    auto sprite_it = begin(rend->sprite) + up_off*rend->w + left_off;
                     //  auto sprite_it = e.sprite.data() otra forma igual al hacer. 
-                    for(size_t i = 0; i<(rend->h); ++i)
+                    while(h--)
                     {
+                       for(size_t i = 0; i<w; ++i ){
+                            if(*sprite_it & 0xFF000000)
+                                *screen = *sprite_it;
+                        ++sprite_it;        
+                        ++screen;
+                       }
                     //cuando tenemos un vector y queremos copiar, usamos esta tecnica. 
-                    std::copy(sprite_it, (sprite_it + rend->w), screen);
+                    //std::copy(sprite_it, (sprite_it + rend->w), screen);
                     //actualizo sprite_it a la siguiente linea 
-                    sprite_it += rend->w; 
+                     sprite_it += rend->w -w ; 
                     //Salto la pantalla 
-                    screen += m_w;
+                    screen += m_w - w;
                     }
                 }
 
@@ -72,27 +130,6 @@
 
     }
 
-/*
-    void RenderSystem_t::drawSprite(){
-
-        uint32_t *pscreen  = screen.get();
-		psrite = sprite;
-		for(uint32_t i = 0; i< 4 ; ++i)
-		{
-			for(uint32_t j = 0; j<4 ; ++j){
-
-				*pscreen = *psrite;
-				++pscreen;
-				++psrite;
-
-			}//una fila del sprite se ha rellenado, ahora toca rellenar la columnas
-			pscreen += this->m_w- 4;
-		}
-
-
-
-    }
-*/    
     template <typename GameCTX_T>
     bool RenderSystem_t<GameCTX_T>::update(const GameCTX_T& g) const 
     {
