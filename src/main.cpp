@@ -9,7 +9,7 @@
 
 typedef u_int32_t uint32_t;
 
-const uint32_t KSCRWEIGHT {640};
+const uint32_t KSCRWEIGHT {1080};
 const uint32_t KSCRHEIGHT {360} ;
 
 
@@ -27,9 +27,9 @@ createEntity(ECS::EntityManager_t& EntityMan, uint32_t x, uint32_t y,   const st
 	ph.x = x;
 	ph.y = y; 
 	//Colliders relativos al objeto Xo = 0; Yo = 0 ; son los del entity no el absoluto de la pantalla 
-	cll.box.xLeft = 0;
-	cll.box.xRight= rn.w;
-	cll.box.yUp  = 0;
+	cll.box.xLeft = 10;
+	cll.box.xRight= rn.w -30;
+	cll.box.yUp  = 10;
 	cll.box.yDown = rn.h;
 
 	return e;
@@ -56,7 +56,7 @@ int main(){
 	//Systems
     const RenderSystem_t<ECS::EntityManager_t> Render(KSCRWEIGHT,KSCRHEIGHT);
 	PhysicsSystem_t<ECS::EntityManager_t> PhySys;
-	CollisionSystem_t<ECS::EntityManager_t> ColliSys;
+	CollisionSystem_t<ECS::EntityManager_t> ColliSys(KSCRHEIGHT,KSCRWEIGHT);
 	InputSystem_t<ECS::EntityManager_t>   InputSys;
 
 	//Entities

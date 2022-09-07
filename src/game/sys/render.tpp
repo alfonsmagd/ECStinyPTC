@@ -22,41 +22,39 @@
 
     template <typename GameCTX_T>
     void 
-    RenderSystem_t<GameCTX_T>::clippingSprite2D(uint32_t& h, uint32_t& w, uint32_t x, uint32_t y, uint32_t rh, uint32_t rw,
+    RenderSystem_t<GameCTX_T>::clippingSprite2D(uint32_t& h, uint32_t& w, uint32_t& x, uint32_t& y, uint32_t rh, uint32_t rw,
     uint32_t& left_off, uint32_t& up_off) const {
            //Horizontal clipping rules 
                     
-                    uint32_t right_off{0};
-                    
-                    uint32_t down_off{0};
-
                     if( x > m_w){                   //left cliping
                        left_off = 0 - x;
-                       if(left_off < w)
-                       {     // nothing to draw
+                     
+                       if(left_off >= w)return;
+                            // nothing to draw
                         x = 0;
                         w -= left_off;
-                        }
+                          std::cout<<"Left cliping";
 
                     }else if ( x + rw >=  m_w){      //Right Cliping. 
-                        right_off = x + w - m_w;
-                        if(right_off < w)             //Nothing to draw. 
+                        uint32_t right_off = x + w - m_w;
+                        if(right_off >= w)     return;        //Nothing to draw. 
                         w -= right_off;
+                          std::cout<<"Right cliping";
                     }
                     
                     //Vertical cliping. 
-                    if( y > m_h){                   //up cliping
+                    if( y >= m_h){                   //up cliping
                        up_off = 0 - y;
-                       if(left_off >= h){     // nothing to draw
+                       if(up_off >= h) return;     // nothing to draw
                         y = 0;
                         h -= up_off;
-                       }
+                         std::cout<<"Up cliping";
 
                     }else if ( y + rh >=  m_h){      //down Cliping. 
-                        down_off = y + h - m_h;
-                        if(down_off >= w){           //Nothing to draw. 
-                        h = -down_off;
-                        }
+                        uint32_t down_off = y + h - m_h;
+                        if(down_off >= h)  return;       //Nothing to draw. 
+                        h -= down_off;
+                          std::cout<<"Down cliping";
                     }
 
     } 
@@ -79,9 +77,9 @@
             //m_framebuffer
                auto* eptr =   g.getEntitybyID(rc.getEntityID());
 
-                screen = m_framebuffer.get();
+                
                 if(eptr){
-
+                    screen = m_framebuffer.get();    
                     auto* phy = eptr->template getComponent<PhysicsComponent_t>();
                     auto* rend = eptr->template getComponent<RenderComponent_t>();
                     //Other wey auto& e = *ptr;
@@ -93,9 +91,9 @@
 
                     uint32_t left_off{0};
                     uint32_t up_off{0};
-
+                    
                     clippingSprite2D(h,w,x,y,rend->h,rend->w,left_off,up_off);
-                    screen = getPosicionScreenXY(phy->x, phy->y);
+                    screen = getPosicionScreenXY(x, y);
                     //puntero a la pantalla 
                     //screen += e.y*m_w +e.x; //necesito saltar y veces para colocarme en su sitio, y despues solamente recorrer la X. 
                     //ya estoy colocado en la pantalla, ahora necesito recorrecor mi sprite 
