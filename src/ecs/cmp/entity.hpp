@@ -35,6 +35,8 @@
             auto* cmp = const_cast<Entity_t*>(this)->getComponent<CMP_T>();
             return const_cast<const CMP_T*>(cmp);
         }
+
+  
      
         constexpr EntityID_t getEntityID() const noexcept {return entityID;}
 

@@ -33,13 +33,13 @@
                             // nothing to draw
                         x = 0;
                         w -= left_off;
-                          std::cout<<"Left cliping";
+                          
 
                     }else if ( x + rw >=  m_w){      //Right Cliping. 
                         uint32_t right_off = x + w - m_w;
                         if(right_off >= w)     return;        //Nothing to draw. 
                         w -= right_off;
-                          std::cout<<"Right cliping";
+                         
                     }
                     
                     //Vertical cliping. 
@@ -48,13 +48,13 @@
                        if(up_off >= h) return;     // nothing to draw
                         y = 0;
                         h -= up_off;
-                         std::cout<<"Up cliping";
+                         
 
                     }else if ( y + rh >=  m_h){      //down Cliping. 
                         uint32_t down_off = y + h - m_h;
                         if(down_off >= h)  return;       //Nothing to draw. 
                         h -= down_off;
-                          std::cout<<"Down cliping";
+                        
                     }
 
     } 

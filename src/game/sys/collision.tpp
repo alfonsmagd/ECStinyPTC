@@ -24,12 +24,11 @@ CollisionSystem_t<GameCTX_T>::getRequieredPhyComponent(GameCTX_T& g, const Colli
     CollisionSystem_t<GameCTX_T>::update(GameCTX_T& g) const {
 
         for(auto& col: g.template getComponents<ColliderComponent_t>()){
-
-        auto* phy = getRequieredPhyComponent(g,col);    
+        
+        auto* phy  = col.template getRequieredOtherTypeComponent<GameCTX_T,ColliderComponent_t,PhysicsComponent_t>(g,col);
+       // auto* phy = getRequieredPhyComponent(g,col);    
         if(!phy) continue; //salta la siguiente iteraccion. 
           //Avoid screen x collision.
-
-
          //Left Collision
           auto xl {phy->x + col.box.xLeft};
           auto xr {phy->x + col.box.xRight};
@@ -44,8 +43,6 @@ CollisionSystem_t<GameCTX_T>::getRequieredPhyComponent(GameCTX_T& g, const Colli
           if( yu > m_h || yd > m_h){
             phy->y -= phy->vy ; phy->vy = -phy->vy;
           }
-
-          
       }//for(auto& e: g.getEntities())
 
         return true;

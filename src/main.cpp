@@ -5,6 +5,7 @@
 #include <game/sys/render.tpp>
 #include <game/sys/physics.tpp>
 #include <game/sys/collision.tpp>
+#include <game/sys/spawner.tpp>
 #include <ecs/man/entitymanager.hpp>
 
 typedef u_int32_t uint32_t;
@@ -44,8 +45,25 @@ createPlayer(ECS::EntityManager_t& EntityMan, uint32_t x, uint32_t y){
 
 void
 createFire(ECS::EntityManager_t& EntityMan, uint32_t x, uint32_t y,   const std::string_view filename){
-		createEntity(EntityMan,x,y,"assets/rsz_d.png");
+		auto& enemy = createEntity(EntityMan,x,y,"assets/rsz_d.png");
 }
+
+void 
+createSpawner(ECS::EntityManager_t& EntityMan, uint32_t x, uint32_t y){
+
+		auto& e = EntityMan.createEntity();
+		auto& phy = EntityMan.addComponent<PhysicsComponent_t>(e);
+		auto& spw = EntityMan.addComponent<SpawnComponent_t>(e);
+
+		spw.spawnerPosition.xSpanw = x;
+		spw.spawnerPosition.ySpwan = y;
+		
+		phy.x = spw.spawnerPosition.xSpanw;
+		phy.y = spw.spawnerPosition.ySpwan;
+		phy.vx = 0;
+		phy.vy = 0;
+}
+
 
 
 
@@ -58,6 +76,7 @@ int main(){
 	PhysicsSystem_t<ECS::EntityManager_t> PhySys;
 	CollisionSystem_t<ECS::EntityManager_t> ColliSys(KSCRHEIGHT,KSCRWEIGHT);
 	InputSystem_t<ECS::EntityManager_t>   InputSys;
+	SpawnerSystem_t<ECS::EntityManager_t> SpawnerSys;
 
 	//Entities
 	ECS::EntityManager_t EntityMan{};
@@ -65,6 +84,7 @@ int main(){
 
 	createFire(EntityMan,50,50,"assets/pica1.png");
 	createPlayer(EntityMan,1,1);
+	createSpawner(EntityMan,10,10);
 	
 	
 		while(Render.update(EntityMan)){
@@ -72,6 +92,7 @@ int main(){
 			 PhySys.update(EntityMan);
 			 ColliSys.update(EntityMan);
 			 InputSys.update(EntityMan);
+			 SpawnerSys.update(EntityMan);
 		}
 	}
 	catch(...){

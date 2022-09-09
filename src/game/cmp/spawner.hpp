@@ -16,10 +16,10 @@ struct SpawnComponent_t : public ECS::ComponentBase_t<SpawnComponent_t>
 
    explicit SpawnComponent_t(ECS::EntityID_t eid) : ComponentBase_t(eid) {};
     
-
+    //ratio<1,1> is like a 1 second. 
     clock::time_point end_Spawn_time{clock::now()};
-    std::chrono::duration<int,std::ratio<1,100>> Spawn_Elapse{5}; 
-    
+    std::chrono::duration<int,std::ratio<1,1>> Spawn_Elapse{5}; 
+    std::size_t to_be_spawned{3};
 
     PositionSpawn_t spawnerPosition;
 
