@@ -6,7 +6,7 @@
 
 struct PositionSpawn_t{
 
-    uint32_t xSpanw, ySpwan;
+    uint32_t xSpawn, ySpawn;
 
 };
 

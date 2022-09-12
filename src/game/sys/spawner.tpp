@@ -32,11 +32,11 @@
        // auto now = SpawnComponent_t::clock::now();
         for(auto& spwn: g.template getComponents<SpawnComponent_t>()){
            
-           auto* phy = spwn.template getRequieredOtherTypeComponent<GameCTX_T,SpawnComponent_t,PhysicsComponent_t>(g,spwn);
+           //auto* phy = spwn.template getRequieredOtherTypeComponent<GameCTX_T,SpawnComponent_t,PhysicsComponent_t>(g,spwn);
            steady_clock::duration elapsed {now - spwn.end_Spawn_time};
            if(spwn.to_be_spawned >0 && elapsed>spwn.Spawn_Elapse){
             
-            generateSpawn(g,phy->x,phy->y);
+            generateSpawn(g,spwn.spawnerPosition.xSpawn, spwn.spawnerPosition.ySpawn);
             std::cout<<"Spawn!"<<std::endl;
             //update features spawn component. 
             spwn.end_Spawn_time = now;
