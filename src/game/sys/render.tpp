@@ -21,15 +21,16 @@
     }
 
     template <typename GameCTX_T>
-    void 
+    bool
     RenderSystem_t<GameCTX_T>::clippingSprite2D(uint32_t& h, uint32_t& w, uint32_t& x, uint32_t& y, uint32_t rh, uint32_t rw,
     uint32_t& left_off, uint32_t& up_off) const {
            //Horizontal clipping rules 
                     
+
                     if( x > m_w){                   //left cliping
                        left_off = 0 - x;
                      
-                       if(left_off >= w)return;
+                       if(left_off >= w)return false;
                             // nothing to draw
                         x = 0;
                         w -= left_off;
@@ -37,7 +38,7 @@
 
                     }else if ( x + rw >=  m_w){      //Right Cliping. 
                         uint32_t right_off = x + w - m_w;
-                        if(right_off >= w)     return;        //Nothing to draw. 
+                        if(right_off >= w)     return false;        //Nothing to draw. 
                         w -= right_off;
                          
                     }
@@ -45,17 +46,18 @@
                     //Vertical cliping. 
                     if( y >= m_h){                   //up cliping
                        up_off = 0 - y;
-                       if(up_off >= h) return;     // nothing to draw
+                       if(up_off >= h) return false;     // nothing to draw
                         y = 0;
                         h -= up_off;
                          
 
                     }else if ( y + rh >=  m_h){      //down Cliping. 
                         uint32_t down_off = y + h - m_h;
-                        if(down_off >= h)  return;       //Nothing to draw. 
+                        if(down_off >= h)  return false;       //Nothing to draw. 
                         h -= down_off;
                         
                     }
+                    return true;
 
     } 
 
@@ -91,8 +93,10 @@
 
                     uint32_t left_off{0};
                     uint32_t up_off{0};
+
                     
-                    clippingSprite2D(h,w,x,y,rend->h,rend->w,left_off,up_off);
+                    if(clippingSprite2D(h,w,x,y,rend->h,rend->w,left_off,up_off))
+                    {
                     screen = getPosicionScreenXY(x, y);
                     //puntero a la pantalla 
                     //screen += e.y*m_w +e.x; //necesito saltar y veces para colocarme en su sitio, y despues solamente recorrer la X. 
@@ -102,20 +106,21 @@
                     //  auto sprite_it = e.sprite.data() otra forma igual al hacer. 
                     while(h--)
                     {
-                       for(size_t i = 0; i<w; ++i ){
+                       for(uint32_t i = 0; i<w; ++i ){
                             if(*sprite_it & 0xFF000000)
                                 *screen = *sprite_it;
                         ++sprite_it;        
                         ++screen;
                        }
-                    //cuando tenemos un vector y queremos copiar, usamos esta tecnica. 
-                    //std::copy(sprite_it, (sprite_it + rend->w), screen);
-                    //actualizo sprite_it a la siguiente linea 
-                     sprite_it += rend->w -w ; 
-                    //Salto la pantalla 
-                    screen += m_w - w;
-                    }
+                        //cuando tenemos un vector y queremos copiar, usamos esta tecnica. 
+                        //std::copy(sprite_it, (sprite_it + rend->w), screen);
+                        //actualizo sprite_it a la siguiente linea 
+                        sprite_it += rend->w -w ; 
+                        //Salto la pantalla 
+                        screen += m_w - w;
+                        }
                 }
+            }
 
             };
 

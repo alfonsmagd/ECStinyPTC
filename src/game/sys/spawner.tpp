@@ -36,7 +36,7 @@
            steady_clock::duration elapsed {now - spwn.end_Spawn_time};
            if(spwn.to_be_spawned >0 && elapsed>spwn.Spawn_Elapse){
             
-            generateSpawn(g,spwn.spawnerPosition.xSpawn, spwn.spawnerPosition.ySpawn);
+            spwn.spawnMethod(spwn);
             std::cout<<"Spawn!"<<std::endl;
             //update features spawn component. 
             spwn.end_Spawn_time = now;
