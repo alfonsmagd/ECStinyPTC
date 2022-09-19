@@ -15,6 +15,12 @@ const uint32_t KSCRWEIGHT {1080};
 const uint32_t KSCRHEIGHT {360} ;
 
 
+void fire(const SpawnComponent_t& spwncomponent){
+	
+}
+
+
+
 int main(){
 	
   try{
@@ -32,11 +38,18 @@ int main(){
 
 	GameFactory.createFire(50,50,"assets/pica1.png");
 	GameFactory.createPlayer(1,1);
-	GameFactory.createSpawner(10,10);
-	
+	GameFactory.createSpawner(10,10,[&](const SpawnComponent_t& spwncomponent){
+			auto* e_spwaner = EntityMan.getEntitybyID(spwncomponent.getEntityID());
+			if(!e_spwaner)return;
+			auto* phy = e_spwaner->getComponent<PhysicsComponent_t>();
+			if(!phy)return;
+			[[maybe_unused]]auto& e = GameFactory.createFire(phy->x,phy->y,"assets/rsz_d.png");
+		}
+		);
+
+//	GameFactory.createSpawner(40,10,fire); 
 	
 		while(Render.update(EntityMan)){
-
 			 PhySys.update(EntityMan);
 			 ColliSys.update(EntityMan);
 			 InputSys.update(EntityMan);

@@ -70,8 +70,7 @@
         
         auto screen = m_framebuffer.get();
         
-        
-            auto getPosicionScreenXY = [&](uint32_t x, uint32_t y){return screen + y*m_w +x;};
+            //auto getPosicionScreenXY = [&](uint32_t x, uint32_t y){return screen + y*m_w +x;};
             //funcion lambda para simplificar los calculos. usamos & para referencia o = para copia. 
             auto drawEntity = [&](const RenderComponent_t& rc ){
             //Es decir cada vez que queramos dibuajr todas las entidades, neceitamos obtener el puntero

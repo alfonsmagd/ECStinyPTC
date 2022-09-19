@@ -16,10 +16,16 @@
         ~RenderSystem_t();
         
         bool update(const GameCTX_T& g) const ;
-        void drawSprite();
         void drawAllEntities(const GameCTX_T& g) const;
         bool clippingSprite2D(uint32_t& h, uint32_t& w, uint32_t& x, uint32_t& y, uint32_t rh, uint32_t rw, uint32_t& left_off, uint32_t& up_off) const;
-        //Constantes 
+        constexpr void EnableDebugMode() noexcept {b_DebugModeRender = true;}
+        constexpr void DisableDebugMode() noexcept {b_DebugModeRender = false;}
+        constexpr void SetColorDebugMode(uint32_t color) noexcept {m_DebugColor = color;}
+
+        private:
+        //Funciones de ayuda. 
+        constexpr uint32_t* getPosicionScreenXY(uint32_t x, uint32_t y)const noexcept {return m_framebuffer.get() + y*m_w +x;};
+
 
         const uint32_t Kg = 0x0000FF00; //constexpr calcula en tiempo de compilaci´on. 
         const uint32_t Kr = 0x00FF0000;
@@ -34,6 +40,8 @@
 
         private:
 
+        bool b_DebugModeRender{false};
+        uint32_t m_DebugColor {0xFFFF0000};
         const uint32_t m_w {0}, m_h{0};
         std::unique_ptr<uint32_t[]> m_framebuffer{nullptr};
         

@@ -1,9 +1,5 @@
 #include "gameobjfactory.hpp"
-#include <game/cmp/collider.hpp>
-#include <game/cmp/render.hpp>
-#include <game/cmp/physics.hpp>
-#include <game/cmp/spawner.hpp>
-#include <ecs/man/entitymanager.hpp>
+
 
 
 
@@ -44,38 +40,4 @@ GameObjectFactory_t::createFire(uint32_t x, uint32_t y,   const std::string_view
         return enemy;
 }
 
-ECS::Entity_t&
-GameObjectFactory_t:: createSpawner( uint32_t x, uint32_t y) const {
 
-		auto& e = m_EntManager.createEntity();
-		auto&rn = m_EntManager.addComponent<RenderComponent_t>(e);
-		auto& spw = m_EntManager.addComponent<SpawnComponent_t>(e);
-		auto& phy = m_EntManager.addComponent<PhysicsComponent_t>(e);
-		auto& coll = m_EntManager.addComponent<ColliderComponent_t>(e);
-		rn.loadFromFile("assets/rsz_d.png");
-		m_EntManager.addComponent<ColliderComponent_t>(e);
-
-		
-		phy.y = y;
-		phy.x = x;
-		phy.vy = 1;
-		phy.vx = 0;
-			//coll.box.xLeft = 10;
-	//coll.box.xRight= rn.w -30;
-	//coll.box.yUp  = 10;
-	//coll.box.yDown = rn.h;
-
-		
-		//No se puede hacer un delegado a un lambda si hay capturas. usar functional. 
-		spw.spawnMethod = [&](const SpawnComponent_t& spwncomponent){
-
-			auto* e_spwaner = m_EntManager.getEntitybyID(spwncomponent.getEntityID());
-			
-			if(!e_spwaner)return;
-			auto* phy = e_spwaner->getComponent<PhysicsComponent_t>();
-			if(!phy)return;
-			[[maybe_unused]]auto& e = createFire(phy->x,phy->y,"assets/rsz_d.png");
-		};
-		
-        return e;
-}
