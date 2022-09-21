@@ -22,11 +22,12 @@
         constexpr void DisableDebugMode() noexcept {b_DebugModeRender = false;}
         constexpr void SetColorDebugMode(uint32_t color) noexcept {m_DebugColor = color;}
 
+
         private:
         //Funciones de ayuda. 
         constexpr uint32_t* getPosicionScreenXY(uint32_t x, uint32_t y)const noexcept {return m_framebuffer.get() + y*m_w +x;};
-
-
+        constexpr void drawBox(const BoundingBox_t& box, uint32_t x, uint32_t y, uint32_t color) const noexcept;
+        constexpr void renderAlignedLineClipped(uint32_t x1, uint32_t x2,uint32_t y, bool yaxis, uint32_t color)const noexcept;
         const uint32_t Kg = 0x0000FF00; //constexpr calcula en tiempo de compilaci´on. 
         const uint32_t Kr = 0x00FF0000;
         const uint32_t Kb = 0x000000FF;

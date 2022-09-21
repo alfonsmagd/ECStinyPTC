@@ -3,6 +3,7 @@
 #include <game/cmp/inputcomponent.hpp>
 #include <game/cmp/render.hpp>
 #include <game/cmp/physics.hpp>
+#include <game/cmp/collider.hpp>
 #include <ecs/util/typealias.hpp>
 
  //Entity desing 

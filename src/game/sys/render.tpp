@@ -25,8 +25,6 @@
     RenderSystem_t<GameCTX_T>::clippingSprite2D(uint32_t& h, uint32_t& w, uint32_t& x, uint32_t& y, uint32_t rh, uint32_t rw,
     uint32_t& left_off, uint32_t& up_off) const {
            //Horizontal clipping rules 
-                    
-
                     if( x > m_w){                   //left cliping
                        left_off = 0 - x;
                      
@@ -60,6 +58,61 @@
                     return true;
 
     } 
+
+
+    
+    template <typename GameCTX_T>
+    constexpr void 
+    RenderSystem_t<GameCTX_T>::drawBox(const BoundingBox_t& box, uint32_t x, uint32_t y, uint32_t color) const noexcept
+    {
+        //Sacamos las cordenadas relativas de nuestro box y las trnasladamos a cordenadas globales. 
+        uint32_t x1 {x + box.xLeft};
+        uint32_t x2 {x + box.xRight};
+        uint32_t y1 {y + box.yUp};
+        uint32_t y2 {y + box.yDown};
+
+    }
+
+    template <typename GameCTX_T>
+    constexpr void 
+    RenderSystem_t<GameCTX_T>::renderAlignedLineClipped(uint32_t x1, uint32_t x2,uint32_t y, bool yaxis, uint32_t color)const noexcept{
+
+        //Si yaxis = fasle , vertical si no es horizontal 
+        uint32_t minfinite {4*m_w};//Infinito
+        uint32_t maxX       {m_w} ;//Maximo valor de X
+        uint32_t maxY       {m_h}; //Maximo valor de Y. 
+        uint32_t stride     {1};    //Grosor de linea de nuestro box. 
+        uint32_t* screen    {nullptr}; //Puntero a pantalla . 
+
+        //Revisamos si es vertical en vez de horizontal para hacer las transformaciones 
+        if(yaxis){
+            minfinite = 4*m_h;
+            maxX = m_h;
+            maxY = m_w;
+            stride = m_w;
+        }
+        //Chek si dibujamos dentro de la pantalla 
+        if(y >= maxY)return;
+
+        //Detectamos donde comenzar a dibujar 
+        uint32_t xstart{0}, xend{0};
+        if(x1 > x2){ xstart = x2; xend = x1;}
+        else        {xstart = x1; xend = x2;}
+
+        //Crop lines to the screen limits
+        if      (xstart > minfinite) xstart = 0;
+        else if (xstart > maxX     ) return;
+        if      (xend   > minfinite) xend = 0;
+        else if (xend   > maxX     ) xend = maxX;
+        if      (xstart  > xend     ) return;
+
+        if(yaxis)                     screen = getPosicionScreenXY(y,xstart);
+        else                          screen = getPosicionScreenXY(xstart,y);
+
+        //Draw the line now with the color. 
+
+
+    }
 
 
     template <typename GameCTX_T>
@@ -150,7 +203,6 @@
 
     }//end update const 
     template <typename GameCTX_T>
-
     RenderSystem_t<GameCTX_T>::~RenderSystem_t<GameCTX_T>()
     {
         ptc_close();
