@@ -31,6 +31,7 @@ int main(){
 	CollisionSystem_t<ECS::EntityManager_t> ColliSys(KSCRHEIGHT,KSCRWEIGHT);
 	InputSystem_t<ECS::EntityManager_t>   InputSys;
 	SpawnerSystem_t<ECS::EntityManager_t> SpawnerSys;
+	Render.EnableDebugMode();
 
 	//Entities
 	ECS::EntityManager_t EntityMan{};

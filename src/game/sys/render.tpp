@@ -71,7 +71,39 @@
         uint32_t y1 {y + box.yUp};
         uint32_t y2 {y + box.yDown};
 
+        renderAlignedLineClipped(x1,x2,y1,false,color);
+        renderAlignedLineClipped(x1,x2,y2,false,color);
+        renderAlignedLineClipped(y1,y2,x1,true,color);
+        renderAlignedLineClipped(y1,y2,x2,true,color);
+
     }
+
+    template <typename GameCTX_T>
+    constexpr void 
+    RenderSystem_t<GameCTX_T>::renderLineScreen(uint32_t* screen, uint32_t lenght, uint32_t stride, uint32_t color) const noexcept{
+        while(lenght > 0){
+            *screen = color;
+            --lenght;
+            screen += stride;
+        }
+    }
+
+     template <typename GameCTX_T>
+    constexpr void 
+    RenderSystem_t<GameCTX_T>::drawFillBox(uint32_t* screen, const BoundingBox_t& box, uint32_t color) const noexcept{
+        const uint32_t width{box.xRight - box.xLeft};
+        uint32_t height {box.yDown - box.yUp};
+        while(height--){
+            uint32_t auxwidth{width};
+            while(auxwidth--){
+                *screen = color;
+                screen++;
+            }
+            screen += m_w - width;
+        }
+
+
+    }        
 
     template <typename GameCTX_T>
     constexpr void 
@@ -110,6 +142,7 @@
         else                          screen = getPosicionScreenXY(xstart,y);
 
         //Draw the line now with the color. 
+        renderLineScreen(screen,xend-xstart,stride,color);
 
 
     }
@@ -172,9 +205,18 @@
                         screen += m_w - w;
                         }
                 }
-            }
+                if(b_DebugModeRender){
 
-            };
+                const auto* col = eptr->template getComponent<ColliderComponent_t>();
+                if(!col)return;
+                drawBox(col->box,phy->x,phy->y,m_DebugColor);
+
+                
+                }//debugModeRender
+            }//end eptr
+
+
+                };
 
             auto& rendcomp = g.template getComponents<RenderComponent_t>();
             std::for_each(begin(rendcomp),end(rendcomp),drawEntity);

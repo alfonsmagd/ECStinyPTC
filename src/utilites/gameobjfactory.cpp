@@ -36,7 +36,7 @@ GameObjectFactory_t::createPlayer (uint32_t x, uint32_t y)const {
 
 ECS::Entity_t&
 GameObjectFactory_t::createFire(uint32_t x, uint32_t y,   const std::string_view filename) const{
-		auto& enemy = createEntity(x,y,"assets/rsz_d.png");
+		auto& enemy = createEntity(x,y,filename);
         return enemy;
 }
 

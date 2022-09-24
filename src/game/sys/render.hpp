@@ -18,8 +18,8 @@
         bool update(const GameCTX_T& g) const ;
         void drawAllEntities(const GameCTX_T& g) const;
         bool clippingSprite2D(uint32_t& h, uint32_t& w, uint32_t& x, uint32_t& y, uint32_t rh, uint32_t rw, uint32_t& left_off, uint32_t& up_off) const;
-        constexpr void EnableDebugMode() noexcept {b_DebugModeRender = true;}
-        constexpr void DisableDebugMode() noexcept {b_DebugModeRender = false;}
+        constexpr void EnableDebugMode() const noexcept {b_DebugModeRender = true;}
+        constexpr void DisableDebugMode() const noexcept {b_DebugModeRender = false;}
         constexpr void SetColorDebugMode(uint32_t color) noexcept {m_DebugColor = color;}
 
 
@@ -27,8 +27,11 @@
         //Funciones de ayuda. 
         constexpr uint32_t* getPosicionScreenXY(uint32_t x, uint32_t y)const noexcept {return m_framebuffer.get() + y*m_w +x;};
         constexpr void drawBox(const BoundingBox_t& box, uint32_t x, uint32_t y, uint32_t color) const noexcept;
+        constexpr void drawFillBox(uint32_t* screen, const BoundingBox_t& box, uint32_t color) const noexcept;
         constexpr void renderAlignedLineClipped(uint32_t x1, uint32_t x2,uint32_t y, bool yaxis, uint32_t color)const noexcept;
-        const uint32_t Kg = 0x0000FF00; //constexpr calcula en tiempo de compilaci´on. 
+        
+        constexpr void renderLineScreen(uint32_t* screen, uint32_t lenght, uint32_t stride, uint32_t color) const noexcept;
+        const uint32_t Kg = 0x00000000; //constexpr calcula en tiempo de compilaci´on. 
         const uint32_t Kr = 0x00FF0000;
         const uint32_t Kb = 0x000000FF;
         
@@ -41,8 +44,8 @@
 
         private:
 
-        bool b_DebugModeRender{false};
-        uint32_t m_DebugColor {0xFFFF0000};
+        mutable bool b_DebugModeRender{false};
+        mutable uint32_t m_DebugColor {0xFF0000FF};
         const uint32_t m_w {0}, m_h{0};
         std::unique_ptr<uint32_t[]> m_framebuffer{nullptr};
         
